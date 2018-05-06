@@ -37,6 +37,19 @@ app.use('/api/role', role);
 app.use('/api/menugroup', menugroup);
 app.use('/api/table', table);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+const server = require('http').createServer(app);
+server.listen(port, () => console.log(`Server running on port ${port}`));
+
+// Config socket.IO
+const io = require('socket.io')(server);
+
+io.on('connection', socket => {
+  socket.on('subscribeToTimer', interval => {
+    console.log('client is subscribing to timer with interval ', interval);
+    setInterval(() => {
+      socket.emit('timer', new Date());
+    }, interval);
+  });
+});
