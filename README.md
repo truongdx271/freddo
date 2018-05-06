@@ -1,6 +1,6 @@
-Application for Freddo Coffee
+# Application for Freddo Coffee
 
-API Routes.
+## 1.API Routes.
 
 | Name       | routes           |
 | ---------- | ---------------- |
