@@ -2,14 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
-const OrderSchema = new Schema({
+const ImportSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'user'
-  },
-  table: {
-    type: Schema.Types.ObjectId,
-    ref: 'table'
   },
   billdate: {
     type: Date,
@@ -18,7 +14,7 @@ const OrderSchema = new Schema({
   listitems: [{
     item: {
       type: Schema.Types.ObjectId,
-      ref: 'menuitem'
+      ref: 'importitem'
     },
     name: {
       type: String
@@ -42,19 +38,10 @@ const OrderSchema = new Schema({
   discount: {
     type: Number
   },
-  total: {
-    type: Number
-  },
-  custpaid: {
-    type: Number
-  },
-  payback: {
-    type: Number
-  },
   status: {
     type: Boolean,
     default: false
   }
 });
 
-module.exports = Order = mongoose.model('order', OrderSchema);
+module.exports = Import = mongoose.model('import', ImportSchema);

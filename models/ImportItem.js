@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
-const MenuItemSchema = new Schema({
+const ImportItemSchema = new Schema({
   group: {
     type: Schema.Types.ObjectId,
     ref: 'group'
@@ -28,7 +28,7 @@ const MenuItemSchema = new Schema({
     type: Number,
     default: 0
   },
-  discount: {
+  quantity: {
     type: Number,
     default: 0
   },
@@ -38,4 +38,4 @@ const MenuItemSchema = new Schema({
   }
 });
 
-module.exports = MenuItem = mongoose.model('menuitem', MenuItemSchema);
+module.exports = ImportItem = mongoose.model('importitem', ImportItemSchema);

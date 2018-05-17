@@ -28,21 +28,28 @@ router.use(auth);
 // @desc    Tests users route
 // @access  Public
 router.get('/test', checkForPermissions, errorHandle, (req, res) =>
-  res.json({ msg: 'Users Works' })
+  res.json({
+    msg: 'Users Works'
+  })
 );
 
 // @route   GET api/users/register
 // @desc    Register user
 // @access  Public
 router.post('/register', (req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
+  const {
+    errors,
+    isValid
+  } = validateRegisterInput(req.body);
 
   // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({
+    email: req.body.email
+  }).then(user => {
     if (user) {
       errors.email = 'Email already exists';
       return res.status(400).json(errors);
@@ -67,7 +74,9 @@ router.post('/register', (req, res) => {
           newUser.password = hash;
 
           // Set default Role
-          Role.findOne({ name: 'normal' }).then(role => {
+          Role.findOne({
+            name: 'normal'
+          }).then(role => {
             if (role) {
               newUser.role = role.id;
             }
@@ -87,7 +96,10 @@ router.post('/register', (req, res) => {
 // @desc    Login User / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
-  const { errors, isValid } = validateLoginInput(req.body);
+  const {
+    errors,
+    isValid
+  } = validateLoginInput(req.body);
 
   // Check Validation
   if (!isValid) {
@@ -98,7 +110,9 @@ router.post('/login', (req, res) => {
   const password = req.body.password;
 
   // Find user by email
-  User.findOne({ email })
+  User.findOne({
+      email
+    })
     .populate('role', ['name', 'permissions'])
     .then(user => {
       // Check for user
@@ -122,8 +136,9 @@ router.post('/login', (req, res) => {
           // Sign Token
           jwt.sign(
             payload,
-            keys.secretOrKey,
-            { expiresIn: 3600 },
+            keys.secretOrKey, {
+              expiresIn: 3600
+            },
             (err, token) => {
               res.json({
                 success: true,
@@ -176,10 +191,20 @@ router.get('/all', checkForPermissions, errorHandle, (req, res) => {
 // @desc    Delete user and profile by id
 // @access  Private
 router.delete('/:user_id', checkForPermissions, errorHandle, (req, res) => {
-  User.findOneAndRemove({ _id: req.params.user_id }).then(() => {
-    Profile.findOneAndRemove({ user: req.params.user_id }).then(() =>
-      res.json({ success: true })
-    );
+  // Old func
+  // User.findOneAndRemove({ _id: req.params.user_id }).then(() => {
+  //   Profile.findOneAndRemove({ user: req.params.user_id }).then(() =>
+  //     res.json({ success: true })
+  //   );
+  // });
+
+  // Test func
+  User.findOneAndRemove({
+    _id: req.params.user_id
+  }).then(() => {
+    res.json({
+      success: true
+    })
   });
 });
 
@@ -188,20 +213,26 @@ router.delete('/:user_id', checkForPermissions, errorHandle, (req, res) => {
 // @access  Private
 router.post('/role/:user_id', checkForPermissions, errorHandle, (req, res) => {
   const errors = {};
-  User.findOne({ _id: req.params.user_id }).then(user => {
+  User.findOne({
+    _id: req.params.user_id
+  }).then(user => {
     if (!user) {
       errors.user = 'User not found';
       res.status(404).json(errors);
     } else {
       // If request send role name
       if (req.body.role_name) {
-        Role.findOne({ name: req.body.role_name }).then(role => {
+        Role.findOne({
+          name: req.body.role_name
+        }).then(role => {
           user.role = role.id;
-          User.findOneAndUpdate(
-            { _id: req.params.user_id },
-            { $set: user },
-            { new: true }
-          ).then(user => res.json(user));
+          User.findOneAndUpdate({
+            _id: req.params.user_id
+          }, {
+            $set: user
+          }, {
+            new: true
+          }).then(user => res.json(user));
         });
       }
 
@@ -209,11 +240,13 @@ router.post('/role/:user_id', checkForPermissions, errorHandle, (req, res) => {
       if (req.body.role_id) {
         user.role = req.body.role_id;
         //Update
-        User.findOneAndUpdate(
-          { _id: req.params.user_id },
-          { $set: user },
-          { new: true }
-        ).then(user => res.json(user));
+        User.findOneAndUpdate({
+          _id: req.params.user_id
+        }, {
+          $set: user
+        }, {
+          new: true
+        }).then(user => res.json(user));
       }
     }
   });

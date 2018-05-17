@@ -10,7 +10,9 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "keywords": ["FREDDO"],
+  "keywords": [
+    "FREDDO"
+  ],
   "author": "TruongDx",
   "license": "MIT",
   "dependencies": {
@@ -21,6 +23,7 @@
     "express-jwt-permissions": "^1.2.0",
     "gravatar": "^1.6.0",
     "jsonwebtoken": "^8.2.0",
+    "moment": "^2.22.1",
     "mongoose": "^5.0.12",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

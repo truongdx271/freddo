@@ -6,6 +6,7 @@ module.exports = errorHandle = (err, req, res, next) => {
     console.log(`ERR: ${err}`);
     errors.nopermission = 'Permissions required';
     res.status(403).json(errors);
+  } else {
+    next();
   }
-  next();
 };

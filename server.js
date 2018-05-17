@@ -7,12 +7,17 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const role = require('./routes/api/role');
 const menugroup = require('./routes/api/menugroup');
+const menuitem = require('./routes/api/menuitem');
 const table = require('./routes/api/table');
+const group = require('./routes/api/group');
+const order = require('./routes/api/order');
 
 const app = express();
 
 // Body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.json());
 
 // DB Config
@@ -35,7 +40,10 @@ app.use('/api/users', users);
 app.use('/api/profile', profile);
 app.use('/api/role', role);
 app.use('/api/menugroup', menugroup);
+app.use('/api/menuitem', menuitem);
 app.use('/api/table', table);
+app.use('/api/group', group);
+app.use('/api/order', order);
 
 const port = process.env.PORT || 8080;
 
