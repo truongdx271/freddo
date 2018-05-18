@@ -37,10 +37,7 @@ router.get('/test', checkForPermissions, errorHandle, (req, res) =>
 // @desc    Register user
 // @access  Public
 router.post('/register', (req, res) => {
-  const {
-    errors,
-    isValid
-  } = validateRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInput(req.body);
 
   // Check Validation
   if (!isValid) {
@@ -96,10 +93,7 @@ router.post('/register', (req, res) => {
 // @desc    Login User / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
-  const {
-    errors,
-    isValid
-  } = validateLoginInput(req.body);
+  const { errors, isValid } = validateLoginInput(req.body);
 
   // Check Validation
   if (!isValid) {
@@ -111,8 +105,8 @@ router.post('/login', (req, res) => {
 
   // Find user by email
   User.findOne({
-      email
-    })
+    email
+  })
     .populate('role', ['name', 'permissions'])
     .then(user => {
       // Check for user
@@ -136,8 +130,9 @@ router.post('/login', (req, res) => {
           // Sign Token
           jwt.sign(
             payload,
-            keys.secretOrKey, {
-              expiresIn: 3600
+            keys.secretOrKey,
+            {
+              expiresIn: 3600 * 6
             },
             (err, token) => {
               res.json({
@@ -204,7 +199,7 @@ router.delete('/:user_id', checkForPermissions, errorHandle, (req, res) => {
   }).then(() => {
     res.json({
       success: true
-    })
+    });
   });
 });
 
@@ -226,13 +221,17 @@ router.post('/role/:user_id', checkForPermissions, errorHandle, (req, res) => {
           name: req.body.role_name
         }).then(role => {
           user.role = role.id;
-          User.findOneAndUpdate({
-            _id: req.params.user_id
-          }, {
-            $set: user
-          }, {
-            new: true
-          }).then(user => res.json(user));
+          User.findOneAndUpdate(
+            {
+              _id: req.params.user_id
+            },
+            {
+              $set: user
+            },
+            {
+              new: true
+            }
+          ).then(user => res.json(user));
         });
       }
 
@@ -240,13 +239,17 @@ router.post('/role/:user_id', checkForPermissions, errorHandle, (req, res) => {
       if (req.body.role_id) {
         user.role = req.body.role_id;
         //Update
-        User.findOneAndUpdate({
-          _id: req.params.user_id
-        }, {
-          $set: user
-        }, {
-          new: true
-        }).then(user => res.json(user));
+        User.findOneAndUpdate(
+          {
+            _id: req.params.user_id
+          },
+          {
+            $set: user
+          },
+          {
+            new: true
+          }
+        ).then(user => res.json(user));
       }
     }
   });
