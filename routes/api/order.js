@@ -203,4 +203,24 @@ router.post('/complete/:_id', (req, res) => {
   });
 });
 
+// @route   DELETE api/order/:order_id
+// @desc    Delete order by id
+// @access  Private
+router.delete(
+  '/:order_id',
+  guard.check(['role:delete']),
+  errorHandle,
+  (req, res) => {
+    const errors = {};
+    Order.findOneAndRemove({ _id: req.params.order_id })
+      .then(() => {
+        res.json({ success: true });
+      })
+      .catch(err => {
+        errors.tablenotfound = 'Order not found';
+        res.status(404).json(errors);
+      });
+  }
+);
+
 module.exports = router;

@@ -1,139 +1,34 @@
 import React, { Component } from 'react';
+import TableDashboard from '../common/TableDashboard';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import Spinner from '../common/Spinner';
+import { getTables, activeTable } from '../../actions/tableActions';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      tableArr: []
+    };
+  }
+
+  componentDidMount() {
+    this.props.getTables();
+  }
+
   render() {
+    const { tables, loading } = this.props.table;
+
     return (
       <div className="home">
         <div className="container">
           <div className="row">
             <div className="col-lg-8">
               <h3 className="lead text-center"> TABLE </h3>{' '}
-              <div className="row mt-3">
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-success mb-3">
-                    <div className="card-header">
-                      <h4>1</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Serving</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>2</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>{' '}
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>3</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>{' '}
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-success mb-3">
-                    <div className="card-header">
-                      <h4>4</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Serving</p>
-                    </div>
-                  </div>
-                </div>{' '}
-              </div>
-              <div className="row mt-3">
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>5</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-success mb-3">
-                    <div className="card-header">
-                      <h4>6</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Serving</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>7</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>8</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>{' '}
-              </div>
-              <div className="row mt-3">
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>9</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>10</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-success mb-3">
-                    <div className="card-header">
-                      <h4>11</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Serving</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3">
-                  <div className="card text-white text-center bg-danger mb-3">
-                    <div className="card-header">
-                      <h4>12</h4>
-                    </div>
-                    <div className="card-body">
-                      <p className="card-text">Empty</p>
-                    </div>
-                  </div>
-                </div>{' '}
-              </div>
+              {/* TableListcontent here */}
+              {tables !== null &&
+                tables !== undefined && <TableDashboard tables={tables} />}
             </div>
             <div className="col-lg-4">
               <h3 className="lead text-center"> ORDER QUEUE </h3>
@@ -165,4 +60,14 @@ class Home extends Component {
   }
 }
 
-export default Home;
+Home.propTypes = {
+  getTables: PropTypes.func.isRequired,
+  activeTable: PropTypes.func.isRequired,
+  table: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  table: state.table
+});
+
+export default connect(mapStateToProps, { getTables, activeTable })(Home);

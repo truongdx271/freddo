@@ -13,7 +13,8 @@ const TableSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['0', '1', '2'] // 0 - Empty, 1 - Not Serve yet, 2- Served
+    enum: ['0', '1', '2'], // 0 - Empty, 1 - Not Serve yet, 2- Served
+    default: '0'
   }
 });
 

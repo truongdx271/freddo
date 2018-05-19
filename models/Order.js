@@ -39,23 +39,32 @@ const OrderSchema = new Schema({
       status: {
         type: Boolean,
         default: false
+      },
+      createAt: {
+        type: Date,
+        default: Date.now
       }
     }
   ],
   amount: {
-    type: Number
+    type: Number,
+    default: 0
   },
   discount: {
-    type: Number
+    type: Number,
+    default: 0
   },
   total: {
-    type: Number
+    type: Number,
+    default: 0
   },
   custpaid: {
-    type: Number
+    type: Number,
+    default: 0
   },
   payback: {
-    type: Number
+    type: Number,
+    default: 0
   },
   status: {
     type: Boolean,

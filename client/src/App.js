@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -69,58 +70,68 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <div className="container">
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <Switch>
-                <PrivateRoute exact path="/menu" component={Menu} />
-              </Switch>
-              <Switch>
-                <PrivateRoute
-                  exact
-                  path="/create-item"
-                  component={CreateItem}
-                />
-              </Switch>
-              <Switch>
-                <PrivateRoute exact path="/edit-item" component={EditItem} />
-              </Switch>
-              <Switch>
-                <PrivateRoute exact path="/home" component={Home} />
-              </Switch>
-              <Switch>
-                <PrivateRoute exact path="/group" component={Group} />
-              </Switch>
-              <Switch>
-                <PrivateRoute
-                  exact
-                  path="/create-group"
-                  component={CreateGroup}
-                />
-              </Switch>
-              <Switch>
-                <PrivateRoute exact path="/edit-group" component={EditGroup} />
-              </Switch>
-              <Switch>
-                <PrivateRoute exact path="/table" component={Table} />
-              </Switch>
-              <Switch>
-                <PrivateRoute
-                  exact
-                  path="/create-table"
-                  component={CreateTable}
-                />
-              </Switch>
-              <Switch>
-                <PrivateRoute exact path="/edit-table" component={EditTable} />
-              </Switch>
+          <MuiThemeProvider>
+            <div className="App">
+              <Navbar />
+              <Route exact path="/" component={Landing} />
+              <div className="container">
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Switch>
+                  <PrivateRoute exact path="/menu" component={Menu} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/create-item"
+                    component={CreateItem}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/edit-item" component={EditItem} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/home" component={Home} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/group" component={Group} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/create-group"
+                    component={CreateGroup}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/edit-group"
+                    component={EditGroup}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/table" component={Table} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/create-table"
+                    component={CreateTable}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/edit-table"
+                    component={EditTable}
+                  />
+                </Switch>
+              </div>
+              <Route exact path="/not-found" component={NotFound} />
+              <Route exact path="/" component={Footer} />
             </div>
-            <Route exact path="/not-found" component={NotFound} />
-            <Route exact path="/" component={Footer} />
-          </div>
+          </MuiThemeProvider>
         </Router>
       </Provider>
     );
