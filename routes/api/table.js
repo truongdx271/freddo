@@ -81,6 +81,7 @@ router.post('/', (req, res) => {
   //Get fields
   const tableFields = {};
   if (req.body.name) tableFields.name = req.body.name;
+  if (req.body.section) tableFields.section = req.body.section;
   if (req.body.status) tableFields.status = req.body.status;
 
   Table.findOne({ name: req.body.name }).then(table => {

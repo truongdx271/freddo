@@ -11,13 +11,16 @@ const menuitem = require('./routes/api/menuitem');
 const table = require('./routes/api/table');
 const group = require('./routes/api/group');
 const order = require('./routes/api/order');
+const importitem = require('./routes/api/importitem');
 
 const app = express();
 
 // Body parser middleware
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
 app.use(bodyParser.json());
 
 // DB Config
@@ -44,6 +47,7 @@ app.use('/api/menuitem', menuitem);
 app.use('/api/table', table);
 app.use('/api/group', group);
 app.use('/api/order', order);
+app.use('/api/importitem', importitem);
 
 const port = process.env.PORT || 8080;
 

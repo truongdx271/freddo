@@ -1,7 +1,8 @@
-import { GET_GROUPS, GROUP_LOADING } from '../actions/types';
+import { GET_GROUPS, GROUP_LOADING, ACTIVE_GROUP } from '../actions/types';
 
 const initialState = {
   groups: null,
+  group: null,
   loading: false
 };
 
@@ -17,6 +18,11 @@ export default function(state = initialState, action) {
         ...state,
         groups: action.payload,
         loading: false
+      };
+    case ACTIVE_GROUP:
+      return {
+        ...state,
+        group: action.payload
       };
     default:
       return state;

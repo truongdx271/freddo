@@ -2,79 +2,67 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
-import {
-  getMenuitems,
-  activeItem,
-  deleteItem
-} from '../../actions/menuActions';
+import { getGroups, activeGroup } from '../../actions/groupActions';
 import { Link } from 'react-router-dom';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
-class Menu extends Component {
+class Group extends Component {
   onDeleteClick(id) {
     this.props.deleteItem(id);
     // console.log(id);
   }
 
   componentDidMount() {
-    this.props.getMenuitems();
+    this.props.getGroups();
   }
 
   buttonFormatter(cell, row, rowIndex) {
     return (
       <div className="m-auto text-center">
-        <Link to="/edit-item" className="btn btn-primary m-1">
-          <i className="far fa-edit fa-sm" />
+        <Link to="/edit-group" className="btn btn-primary m-1">
+          <i className="far fa-edit" />
         </Link>
         <button
           className="btn btn-danger m-1"
           type="button"
           onClick={() => {
-            if (window.confirm('Are you sure you wish to delete this item?'))
+            if (window.confirm('Are you sure you wish to delete this group?'))
               this.onDeleteClick(row._id);
           }}
         >
-          <i className="fas fa-eraser fa-sm" />
+          <i className="fas fa-eraser" />
         </button>{' '}
       </div>
     );
   }
 
   render() {
-    const { menuitems, loading } = this.props.menu;
+    const { groups, loading } = this.props.group;
 
     const columns = [
       {
-        dataField: 'code',
-        text: 'Product code',
-        headerClasses: 'text-center',
-        filter: textFilter()
+        dataField: '_id',
+        text: 'id',
+        hidden: true
       },
       {
         dataField: 'name',
-        text: 'Product Name',
         headerClasses: 'text-center',
+        text: 'Group Name',
         filter: textFilter()
       },
       {
         dataField: 'description',
         text: 'Description',
         headerClasses: 'text-center'
-        // filter: textFilter()
       },
       {
-        dataField: 'price',
-        text: 'Price',
-        headerClasses: 'text-center'
-        // filter: textFilter()
-      },
-      {
-        dataField: 'discount',
+        dataField: 'grouptype',
         headerClasses: 'text-center',
-        text: 'Discount'
+        text: 'Type'
       },
       {
         dataField: 'action',
@@ -86,30 +74,18 @@ class Menu extends Component {
 
     const rowEvents = {
       onClick: (e, row, rowIndex) => {
-        let menuitem = {};
-        menuitem.code = row.code;
-        menuitem.date = row.date;
-        menuitem.description = row.description;
-        menuitem.discount = String(row.discount);
-        menuitem.price = String(row.price);
-        menuitem.name = row.name;
-        menuitem.unit = row.unit;
-        menuitem._v = row._v;
-        menuitem._id = row._id;
-        menuitem.group = row.group._id;
-
-        this.props.activeItem(menuitem);
+        this.props.activeGroup(row);
       }
     };
 
-    let menutable;
-    if (menuitems === null || loading) {
-      menutable = <Spinner />;
+    let grouptable;
+    if (groups === null || loading) {
+      grouptable = <Spinner />;
     } else {
-      menutable = (
+      grouptable = (
         <BootstrapTable
-          keyField="code"
-          data={menuitems}
+          keyField="_id"
+          data={groups}
           striped
           columns={columns}
           pagination={paginationFactory()}
@@ -123,37 +99,35 @@ class Menu extends Component {
       <div className="container">
         <div className="row mb-3">
           <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Menu</h1>
+            <h1 className="display-4 text-center">Group</h1>
           </div>
         </div>
         <div className="row mb-3">
           <div className="col-md-4">
-            <Link to="/create-item" className="btn btn-success">
+            <Link to="/create-group" className="btn btn-success">
               Create New
             </Link>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">{menutable}</div>
+          <div className="col-md-12">{grouptable}</div>
         </div>
       </div>
     );
   }
 }
 
-Menu.propTypes = {
-  activeItem: PropTypes.func.isRequired,
-  getMenuitems: PropTypes.func.isRequired,
-  deleteItem: PropTypes.func.isRequired,
-  menu: PropTypes.object.isRequired
+Group.propTypes = {
+  getGroups: PropTypes.func.isRequired,
+  activeGroup: PropTypes.func.isRequired,
+  group: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  menu: state.menu
+  group: state.group
 });
 
 export default connect(mapStateToProps, {
-  getMenuitems,
-  activeItem,
-  deleteItem
-})(Menu);
+  getGroups,
+  activeGroup
+})(Group);

@@ -12,8 +12,8 @@ const TableSchema = new Schema({
     required: true
   },
   status: {
-    type: Boolean,
-    default: false
+    type: String,
+    enum: ['0', '1', '2'] // 0 - Empty, 1 - Not Serve yet, 2- Served
   }
 });
 

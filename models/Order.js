@@ -15,27 +15,33 @@ const OrderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  listitems: [{
-    item: {
-      type: Schema.Types.ObjectId,
-      ref: 'menuitem'
-    },
-    name: {
-      type: String
-    },
-    price: {
-      type: Number,
-      default: 0
-    },
-    discount: {
-      type: Number,
-      default: 0
-    },
-    quantity: {
-      type: Number,
-      default: 1
+  listitems: [
+    {
+      item: {
+        type: Schema.Types.ObjectId,
+        ref: 'menuitem'
+      },
+      name: {
+        type: String
+      },
+      price: {
+        type: Number,
+        default: 0
+      },
+      discount: {
+        type: Number,
+        default: 0
+      },
+      quantity: {
+        type: Number,
+        default: 1
+      },
+      status: {
+        type: Boolean,
+        default: false
+      }
     }
-  }],
+  ],
   amount: {
     type: Number
   },

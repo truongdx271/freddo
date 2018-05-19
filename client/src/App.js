@@ -20,6 +20,8 @@ import Menu from './components/menu/Menu';
 import CreateItem from './components/menu-item/CreateItem';
 import EditItem from './components/menu-item/EditItem';
 import Home from './components/home/Home';
+import Group from './components/group/Group';
+import CreateGroup from './components/group/CreateGroup';
 
 import './App.css';
 // import { subscribeToTimer } from './api';
@@ -84,6 +86,16 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/home" component={Home} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/group" component={Group} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/create-group"
+                  component={CreateGroup}
+                />
               </Switch>
             </div>
             <Route exact path="/not-found" component={NotFound} />
