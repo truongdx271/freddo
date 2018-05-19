@@ -3,37 +3,37 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import {
-  getGroups,
-  activeGroup,
-  deleteGroup
-} from '../../actions/groupActions';
+  getTables,
+  activeTable,
+  deleteTable
+} from '../../actions/tableActions';
 import { Link } from 'react-router-dom';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
-class Group extends Component {
+class Table extends Component {
   onDeleteClick(id) {
-    this.props.deleteGroup(id);
+    this.props.deleteTable(id);
     // console.log(id);
   }
 
   componentDidMount() {
-    this.props.getGroups();
+    this.props.getTables();
   }
 
   buttonFormatter(cell, row, rowIndex) {
     return (
       <div className="m-auto text-center">
-        <Link to="/edit-group" className="btn btn-primary m-1">
+        <Link to="/edit-table" className="btn btn-primary m-1">
           <i className="far fa-edit" />
         </Link>
         <button
           className="btn btn-danger m-1"
           type="button"
           onClick={() => {
-            if (window.confirm('Are you sure you wish to delete this group?'))
+            if (window.confirm('Are you sure you wish to delete this table?'))
               this.onDeleteClick(row._id);
           }}
         >
@@ -44,7 +44,7 @@ class Group extends Component {
   }
 
   render() {
-    const { groups, loading } = this.props.group;
+    const { tables, loading } = this.props.table;
 
     const columns = [
       {
@@ -55,18 +55,13 @@ class Group extends Component {
       {
         dataField: 'name',
         headerClasses: 'text-center',
-        text: 'Group Name',
+        text: 'Table Name',
         filter: textFilter()
       },
       {
-        dataField: 'description',
-        text: 'Description',
+        dataField: 'section',
+        text: 'Section',
         headerClasses: 'text-center'
-      },
-      {
-        dataField: 'grouptype',
-        headerClasses: 'text-center',
-        text: 'Type'
       },
       {
         dataField: 'action',
@@ -78,18 +73,18 @@ class Group extends Component {
 
     const rowEvents = {
       onClick: (e, row, rowIndex) => {
-        this.props.activeGroup(row);
+        this.props.activeTable(row);
       }
     };
 
-    let grouptable;
-    if (groups === null || loading) {
-      grouptable = <Spinner />;
+    let tableTable;
+    if (tables === null || loading) {
+      tableTable = <Spinner />;
     } else {
-      grouptable = (
+      tableTable = (
         <BootstrapTable
           keyField="_id"
-          data={groups}
+          data={tables}
           striped
           columns={columns}
           pagination={paginationFactory()}
@@ -103,37 +98,37 @@ class Group extends Component {
       <div className="container">
         <div className="row mb-3">
           <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Group</h1>
+            <h1 className="display-4 text-center">Table</h1>
           </div>
         </div>
         <div className="row mb-3">
           <div className="col-md-4">
-            <Link to="/create-group" className="btn btn-success">
+            <Link to="/create-table" className="btn btn-success">
               Create New
             </Link>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">{grouptable}</div>
+          <div className="col-md-12">{tableTable}</div>
         </div>
       </div>
     );
   }
 }
 
-Group.propTypes = {
-  getGroups: PropTypes.func.isRequired,
-  deleteGroup: PropTypes.func.isRequired,
-  activeGroup: PropTypes.func.isRequired,
-  group: PropTypes.object.isRequired
+Table.propTypes = {
+  getTables: PropTypes.func.isRequired,
+  deleteTable: PropTypes.func.isRequired,
+  activeTable: PropTypes.func.isRequired,
+  table: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  group: state.group
+  table: state.table
 });
 
 export default connect(mapStateToProps, {
-  getGroups,
-  activeGroup,
-  deleteGroup
-})(Group);
+  getTables,
+  activeTable,
+  deleteTable
+})(Table);

@@ -4,11 +4,13 @@ import errorReducer from './errorReducer';
 import profileReducer from './profileReducer';
 import menuReducer from './menuReducer';
 import groupReducer from './groupReducer';
+import tableReducer from './tableReducer';
 
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
   profile: profileReducer,
   menu: menuReducer,
-  group: groupReducer
+  group: groupReducer,
+  table: tableReducer
 });

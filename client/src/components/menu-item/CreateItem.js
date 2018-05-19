@@ -64,20 +64,22 @@ class CreateItem extends Component {
       groupOptions = [{ label: '*Select group for menu-item', value: 0 }];
       groups.forEach(group => {
         let option = { label: group.name, value: group._id };
-        groupOptions.push(option);
+        if (group.grouptype === 'menugroup') {
+          groupOptions.push(option);
+        }
       });
     }
 
     // Select options for unit
-    let unitOptions = [
-      { label: '*Select Unit for menu-item', value: 0 },
-      { label: 'Ly', value: 'Ly' },
-      { label: 'Cốc', value: 'Cốc' },
-      { label: 'Tách', value: 'Tách' },
-      { label: 'Gói', value: 'Gói' },
-      { label: 'Hộp', value: 'Hộp' },
-      { label: 'Chiếc', value: 'Chiếc' }
-    ];
+    // let unitOptions = [
+    //   { label: '*Select Unit for menu-item', value: 0 },
+    //   { label: 'Ly', value: 'Ly' },
+    //   { label: 'Cốc', value: 'Cốc' },
+    //   { label: 'Tách', value: 'Tách' },
+    //   { label: 'Gói', value: 'Gói' },
+    //   { label: 'Hộp', value: 'Hộp' },
+    //   { label: 'Chiếc', value: 'Chiếc' }
+    // ];
 
     return (
       <div className="createitem">
@@ -101,13 +103,20 @@ class CreateItem extends Component {
                   options={groupOptions}
                   error={errors.status}
                 />
-                <SelectListGroup
+                {/* <SelectListGroup
                   placeholder="Unit"
                   name="unit"
                   value={this.state.unit}
                   onChange={this.onChange}
                   options={unitOptions}
                   error={errors.status}
+                /> */}
+                <TextFieldGroup
+                  placeholder="Unit"
+                  name="unit"
+                  value={this.state.unit}
+                  onChange={this.onChange}
+                  error={errors.unit}
                 />
                 <TextFieldGroup
                   placeholder="Description"

@@ -5,33 +5,35 @@ const Schema = mongoose.Schema;
 const ImportSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'user'
+    ref: 'users'
   },
   billdate: {
     type: Date,
     default: Date.now
   },
-  listitems: [{
-    item: {
-      type: Schema.Types.ObjectId,
-      ref: 'importitem'
-    },
-    name: {
-      type: String
-    },
-    price: {
-      type: Number,
-      default: 0
-    },
-    discount: {
-      type: Number,
-      default: 0
-    },
-    quantity: {
-      type: Number,
-      default: 1
+  listitems: [
+    {
+      item: {
+        type: Schema.Types.ObjectId,
+        ref: 'importitem'
+      },
+      name: {
+        type: String
+      },
+      price: {
+        type: Number,
+        default: 0
+      },
+      discount: {
+        type: Number,
+        default: 0
+      },
+      quantity: {
+        type: Number,
+        default: 1
+      }
     }
-  }],
+  ],
   amount: {
     type: Number
   },

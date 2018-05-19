@@ -1,38 +1,38 @@
 import {
-  GET_GROUPS,
-  GROUP_LOADING,
-  ACTIVE_GROUP,
-  DELETE_GROUP
+  GET_TABLES,
+  TABLE_LOADING,
+  ACTIVE_TABLE,
+  DELETE_TABLE
 } from '../actions/types';
 
 const initialState = {
-  groups: null,
-  group: null,
+  tables: null,
+  table: null,
   loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GROUP_LOADING:
+    case TABLE_LOADING:
       return {
         ...state,
         loading: true
       };
-    case GET_GROUPS:
+    case GET_TABLES:
       return {
         ...state,
-        groups: action.payload,
+        tables: action.payload,
         loading: false
       };
-    case ACTIVE_GROUP:
+    case ACTIVE_TABLE:
       return {
         ...state,
-        group: action.payload
+        table: action.payload
       };
-    case DELETE_GROUP:
+    case DELETE_TABLE:
       return {
         ...state,
-        groups: state.groups.filter(group => group._id !== action.payload)
+        tables: state.tables.filter(table => table._id !== action.payload)
       };
     default:
       return state;

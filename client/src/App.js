@@ -22,6 +22,10 @@ import EditItem from './components/menu-item/EditItem';
 import Home from './components/home/Home';
 import Group from './components/group/Group';
 import CreateGroup from './components/group/CreateGroup';
+import EditGroup from './components/group/EditGroup';
+import Table from './components/table/Table';
+import CreateTable from './components/table/CreateTable';
+import EditTable from './components/table/EditTable';
 
 import './App.css';
 // import { subscribeToTimer } from './api';
@@ -96,6 +100,22 @@ class App extends Component {
                   path="/create-group"
                   component={CreateGroup}
                 />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/edit-group" component={EditGroup} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/table" component={Table} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/create-table"
+                  component={CreateTable}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/edit-table" component={EditTable} />
               </Switch>
             </div>
             <Route exact path="/not-found" component={NotFound} />

@@ -3,7 +3,8 @@ import {
   GROUP_LOADING,
   GET_GROUPS,
   GET_ERRORS,
-  ACTIVE_GROUP
+  ACTIVE_GROUP,
+  DELETE_GROUP
 } from '../actions/types';
 
 // Get group for item
@@ -30,6 +31,24 @@ export const createGroup = (group, history) => dispatch => {
   axios
     .post('/api/group', group)
     .then(res => history.push('/group'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Delete group
+export const deleteGroup = id => dispatch => {
+  axios
+    .delete(`/api/group/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_GROUP,
+        payload: id
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

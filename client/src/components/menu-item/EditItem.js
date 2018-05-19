@@ -18,6 +18,7 @@ class EditItem extends Component {
       price: '',
       discount: '',
       group: '',
+      unit: '',
       errors: {}
     };
 
@@ -34,6 +35,7 @@ class EditItem extends Component {
     }
 
     if (nextProps.menu.item) {
+      console.log('Here');
       const menuitem = nextProps.menu.item;
 
       // If null, make empty
@@ -43,6 +45,7 @@ class EditItem extends Component {
         ? menuitem.description
         : '';
       menuitem.group = !isEmpty(menuitem.group) ? menuitem.group : '';
+      menuitem.unit = !isEmpty(menuitem.unit) ? menuitem.unit : '';
       menuitem.price = !isEmpty(menuitem.price) ? menuitem.price : '0';
       menuitem.discount = !isEmpty(menuitem.discount) ? menuitem.discount : '0';
 
@@ -52,6 +55,7 @@ class EditItem extends Component {
         name: menuitem.name,
         description: menuitem.description,
         group: menuitem.group,
+        unit: menuitem.unit,
         price: menuitem.price,
         discount: menuitem.discount
       });
@@ -91,7 +95,9 @@ class EditItem extends Component {
       options = [{ label: '*Select group for menu-item', value: 0 }];
       groups.forEach(group => {
         let option = { label: group.name, value: group._id };
-        options.push(option);
+        if (group.grouptype === 'menugroup') {
+          options.push(option);
+        }
       });
     }
 

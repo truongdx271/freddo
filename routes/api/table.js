@@ -110,7 +110,7 @@ router.delete(
   errorHandle,
   (req, res) => {
     const errors = {};
-    MenuGroup.findOneAndRemove({ _id: req.params.table_id })
+    Table.findOneAndRemove({ _id: req.params.table_id })
       .then(() => {
         res.json({ success: true });
       })
