@@ -14,11 +14,14 @@ import servedImg from './../../img/served.png';
 class TableDashboard extends Component {
   state = {
     open: false,
-    currentTable: ''
+    currentTable: '',
+    currentOrder: {}
   };
 
   handleOpen = table => {
-    this.setState({ open: true, currentTable: table });
+    const { orders } = this.props;
+    let order = orders.find(item => item.table === table);
+    this.setState({ open: true, currentTable: table, currentOrder: order });
   };
 
   handleClose = () => {
@@ -28,6 +31,7 @@ class TableDashboard extends Component {
   render() {
     let tableListContent;
     const { tables } = this.props;
+    const { orders } = this.props;
 
     if (tables) {
       tableListContent = (
@@ -76,7 +80,7 @@ class TableDashboard extends Component {
           onRequestClose={this.handleClose}
         >
           {/* <img src={tableImg} alt="" style={{ width: '100%' }} /> */}
-          <InvoiceGrid />
+          <InvoiceGrid order={this.state.currentOrder} />
         </Dialog>
       </div>
     );
@@ -84,7 +88,8 @@ class TableDashboard extends Component {
 }
 
 TableDashboard.propTypes = {
-  tables: PropTypes.array.isRequired
+  tables: PropTypes.array.isRequired,
+  orders: PropTypes.array.isRequired
 };
 
 export default TableDashboard;

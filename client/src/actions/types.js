@@ -19,3 +19,7 @@ export const GET_TABLES = 'GET_TABLES';
 export const ACTIVE_TABLE = 'ACTIVE_TABLE';
 export const TABLE_LOADING = 'TABLE_LOADING';
 export const DELETE_TABLE = 'DELETE_TABLE';
+export const GET_ORDERS = 'GET_ORDERS';
+export const GET_FALSE_ORDERS = 'GET_FALSE_ORDERS';
+export const ACTIVE_ORDER = 'ACTIVE_ORDER';
+export const ORDER_LOADING = 'ORDER_LOADING';

@@ -5,6 +5,7 @@ import profileReducer from './profileReducer';
 import menuReducer from './menuReducer';
 import groupReducer from './groupReducer';
 import tableReducer from './tableReducer';
+import orderReducer from './orderReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   profile: profileReducer,
   menu: menuReducer,
   group: groupReducer,
-  table: tableReducer
+  table: tableReducer,
+  order: orderReducer
 });
