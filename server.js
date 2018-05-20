@@ -79,9 +79,15 @@ io.on('connection', socket => {
     socket.broadcast.emit(keys.INVOICE_UPDATE_DESK, order);
   });
 
-  // Trigger when a a request to pay
+  // Trigger when received a command to pay
   socket.on(keys.INVOICE_REQUEST, order => {
     console.log('Requesting to pay...');
     socket.broadcast.emit(keys.INVOICE_REQUEST_DESK, order);
+  });
+
+  // Trigger when complete an invoice
+  socket.on(keys.INVOICE_COMPLETE, table => {
+    console.log('Completing an invoice...');
+    socket.broadcast.emit(keys.INVOICE_COMPLETE_DESK, table);
   });
 });

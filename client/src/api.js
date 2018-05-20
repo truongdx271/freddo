@@ -21,4 +21,14 @@ function invoiceRequest(cb) {
   socket.on(events.INVOICE_REQUEST_DESK, order => cb(order));
 }
 
-export { subscribeToTimer, iotest, invoiceUpdate, invoiceRequest };
+function invoiceComplete(table) {
+  socket.emit(events.INVOICE_COMPLETE, table);
+}
+
+export {
+  subscribeToTimer,
+  iotest,
+  invoiceUpdate,
+  invoiceRequest,
+  invoiceComplete
+};

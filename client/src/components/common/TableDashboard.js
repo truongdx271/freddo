@@ -15,6 +15,8 @@ import awaitImg from './../../img/await.png';
 import servedImg from './../../img/served.png';
 import requestedImg from './../../img/requested.png';
 
+import { invoiceComplete } from '../../api';
+
 class TableDashboard extends Component {
   state = {
     open: false,
@@ -58,6 +60,7 @@ class TableDashboard extends Component {
     this.props.completeOrder(newResult, this.state.currentOrder._id);
     this.props.updateEmptyTable(updateTable);
 
+    invoiceComplete(updateTable);
     alert('Completed!!!!');
   };
 
@@ -74,7 +77,7 @@ class TableDashboard extends Component {
               title={table.name}
               key={table._id}
               actionIcon={
-                table.status === '2' || table.status === '1' ? (
+                table.status !== '0' ? (
                   <IconButton onClick={() => this.handleOpen(table)}>
                     <ZoomIn color="white" />
                   </IconButton>
