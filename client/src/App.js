@@ -29,7 +29,7 @@ import CreateTable from './components/table/CreateTable';
 import EditTable from './components/table/EditTable';
 
 import './App.css';
-// import { subscribeToTimer } from './api';
+import { subscribeToTimer, iotest } from './api';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -53,18 +53,10 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     timestamp: 'no timestamp yet'
-  //   };
-
-  //   subscribeToTimer((err, timestamp) =>
-  //     this.setState({
-  //       timestamp
-  //     })
-  //   );
-  // }
+  constructor(props) {
+    super(props);
+    iotest(data => console.log(data));
+  }
 
   render() {
     return (

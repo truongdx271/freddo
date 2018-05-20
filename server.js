@@ -60,15 +60,24 @@ server.listen(port, () => console.log(`Server running on port ${port}`));
 const io = require('socket.io')(server);
 
 io.on('connection', socket => {
-  // socket.on('subscribeToTimer', interval => {
-  //   console.log('client is subscribing to timer with interval ', interval);
-  //   setInterval(() => {
-  //     socket.emit('timer', new Date());
-  //   }, interval);
-  // });
+  socket.on('subscribeToTimer', interval => {
+    console.log('client is subscribing to timer with interval ', interval);
+    setInterval(() => {
+      socket.emit('timer', new Date());
+    }, interval);
+  });
 
   socket.on(keys.IOTEST, data => {
     console.log(data);
-    socket.emit(keys.IOTESTDESK, data);
+    // io.sockets.emit(keys.IOTESTDESK, data);
+    socket.broadcast.emit(keys.IOTESTDESK, data);
+  });
+
+  socket.on(keys.INVOICE_UPDATE, order => {
+    console.log(`ORDER updated`);
+    console.log(`order_id: ${order._id}`);
+    console.log(`table: ${order.table._id}`);
+
+    socket.broadcast.emit(keys.INVOICE_UPDATE_DESK, order);
   });
 });
