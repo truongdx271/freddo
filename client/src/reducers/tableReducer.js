@@ -2,7 +2,8 @@ import {
   GET_TABLES,
   TABLE_LOADING,
   ACTIVE_TABLE,
-  DELETE_TABLE
+  DELETE_TABLE,
+  UPDATE_STATUS_TABLE
 } from '../actions/types';
 
 const initialState = {
@@ -28,6 +29,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         table: action.payload
+      };
+    case UPDATE_STATUS_TABLE:
+      const index = state.table.findIndex(
+        item => item._id === action.payload._id
+      );
+      return {
+        ...state,
+        tables: state.tables.splice(index, 1, action.payload)
       };
     case DELETE_TABLE:
       return {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Paper from 'material-ui/Paper';
 import {
   Table,
   TableBody,
@@ -89,7 +90,7 @@ class InvoiceGrid extends Component {
       );
       orderFooter = (
         <div>
-          <h2 className="text-right">
+          <h2 className="text-right mt-2">
             TOTAL: {this.formatCurrency(this.state.total)} đ
           </h2>
         </div>
@@ -103,7 +104,7 @@ class InvoiceGrid extends Component {
     return (
       <div className="container">
         {orderHeader}
-        {orderContent}
+        <Paper>{orderContent}</Paper>
         {orderFooter}
       </div>
     );

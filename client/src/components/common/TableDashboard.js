@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { completeOrder } from '../../actions/orderActions';
+import { updateEmptyTable } from '../../actions/tableActions';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
@@ -15,18 +18,44 @@ import requestedImg from './../../img/requested.png';
 class TableDashboard extends Component {
   state = {
     open: false,
-    currentTable: '',
+    currentTable: {},
     currentOrder: {}
   };
 
   handleOpen = table => {
     const { orders } = this.props;
-    let order = orders.find(item => item.table._id === table);
+    let order = orders.find(item => item.table._id === table._id);
     this.setState({ open: true, currentTable: table, currentOrder: order });
   };
 
   handleClose = () => {
     this.setState({ open: false });
+  };
+
+  handleComplete = () => {
+    //alert('Completed invoice!!!');
+    let data = this.state.currentOrder.listitems;
+    let totalData = 0;
+    data.forEach(item => {
+      totalData += item.quantity * item.price * (100 - item.discount) / 100;
+    });
+
+    // order data to update
+    const newResult = {
+      amount: totalData,
+      total: totalData
+    };
+
+    // new table for update
+    const updateTable = {
+      name: this.state.currentTable.name,
+      section: this.state.currentTable.section,
+      status: '0'
+    };
+
+    //Update action
+    this.props.completeOrder(newResult, this.state.currentOrder._id);
+    this.props.updateEmptyTable(updateTable);
   };
 
   render() {
@@ -43,7 +72,7 @@ class TableDashboard extends Component {
               key={table._id}
               actionIcon={
                 table.status === '2' || table.status === '1' ? (
-                  <IconButton onClick={() => this.handleOpen(table._id)}>
+                  <IconButton onClick={() => this.handleOpen(table)}>
                     <ZoomIn color="white" />
                   </IconButton>
                 ) : null
@@ -70,6 +99,11 @@ class TableDashboard extends Component {
     }
 
     const actions = [
+      <FlatButton
+        label="Complete"
+        secondary={true}
+        onClick={this.handleComplete}
+      />,
       <FlatButton label="Close" primary={true} onClick={this.handleClose} />
     ];
 
@@ -91,8 +125,16 @@ class TableDashboard extends Component {
 }
 
 TableDashboard.propTypes = {
+  completeOrder: PropTypes.func.isRequired,
+  updateEmptyTable: PropTypes.func.isRequired,
   tables: PropTypes.array.isRequired,
   orders: PropTypes.array.isRequired
 };
 
-export default TableDashboard;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { completeOrder, updateEmptyTable })(
+  TableDashboard
+);

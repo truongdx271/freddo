@@ -1,7 +1,8 @@
 import {
   GET_FALSE_ORDERS,
   ORDER_LOADING,
-  ACTIVE_ORDER
+  ACTIVE_ORDER,
+  COMPLETE_ORDER
 } from '../actions/types';
 
 const initialState = {
@@ -27,6 +28,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         order: action.payload
+      };
+    case COMPLETE_ORDER:
+      return {
+        ...state,
+        orders: state.orders.filter(order => order._id !== action.payload)
       };
     default:
       return state;

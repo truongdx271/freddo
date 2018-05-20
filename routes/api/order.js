@@ -34,9 +34,13 @@ router.get('/test', (req, res) =>
 // Query var: page, perPage, user, status
 router.get('/', (req, res) => {
   const errors = {};
-  const perPage = req.query.perPage || 10;
+  const perPage = 10
   const page = Math.max(0, req.query.page);
   var query = {};
+
+  if (req.query.perPage !== undefined) {
+    perPage = parseInt(req.query.perPage)
+  }
   if (req.query.user !== undefined) {
     query.user = req.query.user;
   }
@@ -147,12 +151,12 @@ router.post('/', (req, res) => {
 // @access  Private
 router.post('/complete/:_id', (req, res) => {
   // Validation
-  const { errors, isValid } = validateOrderInput(req.body);
-
+  //const { errors, isValid } = validateOrderInput(req.body);
+  const {errors};
   // Check Validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+  // if (!isValid) {
+  //   return res.status(400).json(errors);
+  // }
 
   let orderAmount = !isEmpty(req.body.amount) ? parseInt(req.body.amount) : 0;
   if (orderAmount === 0) {
@@ -166,10 +170,11 @@ router.post('/complete/:_id', (req, res) => {
   let orderBack = !isEmpty(req.body.payback) ? parseInt(req.body.payback) : 0;
   let orderTotal = !isEmpty(req.body.total) ? parseInt(req.body.total) : 0;
 
-  if (orderPaid < orderTotal) {
-    errors.custpaid = 'Not enough';
-    res.status(400).json(errors);
-  }
+  // Skip this logic
+  // if (orderPaid < orderTotal) {
+  //   errors.custpaid = 'Not enough';
+  //   res.status(400).json(errors);
+  // }
 
   Order.findById(req.params._id, (err, order) => {
     if (err) {

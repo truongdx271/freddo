@@ -3,7 +3,7 @@ import {
   GET_FALSE_ORDERS,
   ORDER_LOADING,
   ACTIVE_ORDER,
-  GET_ERRORS
+  COMPLETE_ORDER
 } from '../actions/types';
 
 // Get All order that status = false
@@ -20,6 +20,24 @@ export const getFalseOrders = () => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_FALSE_ORDERS,
+        payload: null
+      });
+    });
+};
+
+// Complete order
+export const completeOrder = (data, id) => dispatch => {
+  axios
+    .post(`/api/order/complete/${id}`, data)
+    .then(res => {
+      dispatch({
+        type: COMPLETE_ORDER,
+        payload: id
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: COMPLETE_ORDER,
         payload: null
       });
     });

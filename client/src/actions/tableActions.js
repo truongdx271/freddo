@@ -4,7 +4,8 @@ import {
   GET_TABLES,
   GET_ERRORS,
   ACTIVE_TABLE,
-  DELETE_TABLE
+  DELETE_TABLE,
+  UPDATE_STATUS_TABLE
 } from '../actions/types';
 
 // Get table
@@ -31,6 +32,24 @@ export const createTable = (table, history) => dispatch => {
   axios
     .post('/api/table', table)
     .then(res => history.push('/table'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Update empty table
+export const updateEmptyTable = table => dispatch => {
+  axios
+    .post('/api/table', table)
+    .then(res =>
+      dispatch({
+        type: UPDATE_STATUS_TABLE,
+        payload: table
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
