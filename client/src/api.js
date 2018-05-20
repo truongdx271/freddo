@@ -13,6 +13,12 @@ function iotest(cb) {
   // socket.emit(events.IOTEST, 'hahaha');
 }
 
-function invoiceUpdate(cb) {}
+function invoiceUpdate(cb) {
+  socket.on(events.INVOICE_UPDATE_DESK, order => cb(order));
+}
 
-export { subscribeToTimer, iotest };
+function invoiceRequest(cb) {
+  socket.on(events.INVOICE_REQUEST_DESK, order => cb(order));
+}
+
+export { subscribeToTimer, iotest, invoiceUpdate, invoiceRequest };

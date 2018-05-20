@@ -73,11 +73,13 @@ io.on('connection', socket => {
     socket.broadcast.emit(keys.IOTESTDESK, data);
   });
 
+  // Trigger when a create or edit an order
   socket.on(keys.INVOICE_UPDATE, order => {
-    console.log(`ORDER updated`);
-    console.log(`order_id: ${order._id}`);
-    console.log(`table: ${order.table._id}`);
-
     socket.broadcast.emit(keys.INVOICE_UPDATE_DESK, order);
+  });
+
+  // Trigger when a a request to pay
+  socket.on(keys.INVOICE_REQUEST, order => {
+    socket.broadcast.emit(keys.INVOICE_REQUEST_DESK, order);
   });
 });

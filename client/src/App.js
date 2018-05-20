@@ -4,6 +4,8 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
+import { getTables } from './actions/tableActions';
+import { getFalseOrders } from './actions/orderActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { Provider } from 'react-redux';
@@ -29,7 +31,7 @@ import CreateTable from './components/table/CreateTable';
 import EditTable from './components/table/EditTable';
 
 import './App.css';
-import { subscribeToTimer, iotest } from './api';
+import { subscribeToTimer, iotest, invoiceUpdate, invoiceRequest } from './api';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -55,7 +57,23 @@ if (localStorage.jwtToken) {
 class App extends Component {
   constructor(props) {
     super(props);
+
+    // Test socket
     iotest(data => console.log(data));
+
+    // Update table status after create an order
+    invoiceUpdate(order => {
+      console.log(order);
+      store.dispatch(getTables());
+      store.dispatch(getFalseOrders());
+    });
+
+    // Update table status after request to pay
+    invoiceRequest(order => {
+      console.log(order);
+      store.dispatch(getTables());
+      store.dispatch(getFalseOrders());
+    });
   }
 
   render() {
