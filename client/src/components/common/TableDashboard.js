@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { completeOrder } from '../../actions/orderActions';
-import { updateEmptyTable } from '../../actions/tableActions';
+import { updateEmptyTable, getTables } from '../../actions/tableActions';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
@@ -14,6 +14,7 @@ import emptyImg from './../../img/empty.png';
 import awaitImg from './../../img/await.png';
 import servedImg from './../../img/served.png';
 import requestedImg from './../../img/requested.png';
+import Paper from 'material-ui/Paper';
 
 import { invoiceComplete } from '../../api';
 
@@ -59,6 +60,7 @@ class TableDashboard extends Component {
     //Update action
     this.props.completeOrder(newResult, this.state.currentOrder._id);
     this.props.updateEmptyTable(updateTable);
+    this.props.getTables();
 
     invoiceComplete(updateTable);
     alert('Completed!!!!');
@@ -71,34 +73,36 @@ class TableDashboard extends Component {
 
     if (tables) {
       tableListContent = (
-        <GridList cols={3}>
-          {tables.map(table => (
-            <GridTile
-              title={table.name}
-              key={table._id}
-              actionIcon={
-                table.status !== '0' ? (
-                  <IconButton onClick={() => this.handleOpen(table)}>
-                    <ZoomIn color="white" />
-                  </IconButton>
-                ) : null
-              }
-            >
-              <img
-                src={
-                  table.status === '0'
-                    ? emptyImg
-                    : table.status === '1'
-                      ? awaitImg
-                      : table.status === '2'
-                        ? servedImg
-                        : requestedImg
+        <Paper zDepth={2}>
+          <GridList cols={3}>
+            {tables.map(table => (
+              <GridTile
+                title={table.name}
+                key={table._id}
+                actionIcon={
+                  table.status !== '0' ? (
+                    <IconButton onClick={() => this.handleOpen(table)}>
+                      <ZoomIn color="white" />
+                    </IconButton>
+                  ) : null
                 }
-                alt=""
-              />
-            </GridTile>
-          ))}
-        </GridList>
+              >
+                <img
+                  src={
+                    table.status === '0'
+                      ? emptyImg
+                      : table.status === '1'
+                        ? awaitImg
+                        : table.status === '2'
+                          ? servedImg
+                          : requestedImg
+                  }
+                  alt=""
+                />
+              </GridTile>
+            ))}
+          </GridList>
+        </Paper>
       );
     } else {
       tableListContent = null;
@@ -133,6 +137,7 @@ class TableDashboard extends Component {
 TableDashboard.propTypes = {
   completeOrder: PropTypes.func.isRequired,
   updateEmptyTable: PropTypes.func.isRequired,
+  getTables: PropTypes.func.isRequired,
   tables: PropTypes.array.isRequired,
   orders: PropTypes.array.isRequired
 };
@@ -141,6 +146,8 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { completeOrder, updateEmptyTable })(
-  TableDashboard
-);
+export default connect(mapStateToProps, {
+  completeOrder,
+  updateEmptyTable,
+  getTables
+})(TableDashboard);

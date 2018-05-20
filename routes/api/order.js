@@ -34,12 +34,12 @@ router.get('/test', (req, res) =>
 // Query var: page, perPage, user, status
 router.get('/', (req, res) => {
   const errors = {};
-  const perPage = 10;
-  const page = Math.max(0, req.query.page);
+  let perPage = 10;
+  let page = Math.max(0, req.query.page);
   var query = {};
 
   if (req.query.perPage !== undefined) {
-    perPage = parseInt(req.query.perPage);
+    perPage = req.query.perPage;
   }
   if (req.query.user !== undefined) {
     query.user = req.query.user;

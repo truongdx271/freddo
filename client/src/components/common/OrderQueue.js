@@ -2,29 +2,55 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GridList, GridTile } from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import { List, ListItem } from 'material-ui/List';
+import moment from 'moment';
 
 class OrderQueue extends Component {
   render() {
-    const { orders } = this.props.order;
+    // moment.locale('vi-VN');
+    const { orders } = this.props;
     let orderQueueContent;
 
     if (orders) {
-      <GridList cols={1}>{orders.map()}</GridList>;
+      orderQueueContent = (
+        <Paper zDepth={2}>
+          <GridList cols={1} cellHeight="auto">
+            {orders.map(order => (
+              <GridTile>
+                <RaisedButton
+                  label={order.table.name.split(' ')[1]}
+                  primary={true}
+                  fullWidth={true}
+                />
+                <List>
+                  {order.listitems.map(item => (
+                    <ListItem
+                      primaryText={item.name}
+                      secondaryText={
+                        // moment().unix() - moment.utc(item.createAt).unix()
+                        moment(item.createAt).fromNow()
+                      }
+                    />
+                  ))}
+                </List>
+              </GridTile>
+            ))}
+          </GridList>
+        </Paper>
+      );
     } else {
       orderQueueContent = null;
     }
 
-    return <div />;
+    return <div>{orderQueueContent}</div>;
   }
 }
 
 OrderQueue.propTypes = {
-  order: PropTypes.object.isRequired
+  orders: PropTypes.array.isRequired
 };
 
-const mapStateToProps = state => ({
-  order: state.order
-});
-
-export default connect(mapStateToProps, null)(OrderQueue);
+export default OrderQueue;

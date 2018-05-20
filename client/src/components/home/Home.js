@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import TableDashboard from '../common/TableDashboard';
+import OrderQueue from '../common/OrderQueue';
+
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTables, activeTable } from '../../actions/tableActions';
@@ -38,26 +40,8 @@ class Home extends Component {
             </div>
             <div className="col-lg-4">
               <h3 className="lead text-center"> ORDER QUEUE </h3>
-              <div className="card">
-                <button type="button" className="btn btn-primary">
-                  <span className="badge badge-light">1</span>{' '}
-                </button>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item"> Cà phê đen </li>
-                  <li className="list-group-item"> Bạc sửu </li>
-                  <li className="list-group-item"> Cà phê nâu </li>
-                </ul>
-              </div>
-              <div className="card">
-                <button type="button" className="btn btn-primary">
-                  <span className="badge badge-light">4</span>{' '}
-                </button>
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item"> Trà đào bạc hà </li>
-                  <li className="list-group-item"> Hồng trà </li>
-                  <li className="list-group-item"> Trà Ô Long sữa </li>
-                </ul>
-              </div>
+              {orders !== null &&
+                orders !== undefined && <OrderQueue orders={orders} />}
             </div>
           </div>
         </div>
@@ -71,7 +55,8 @@ Home.propTypes = {
   activeTable: PropTypes.func.isRequired,
   getFalseOrders: PropTypes.func.isRequired,
   activeOrder: PropTypes.func.isRequired,
-  table: PropTypes.object.isRequired
+  table: PropTypes.object.isRequired,
+  order: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
