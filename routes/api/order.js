@@ -31,11 +31,11 @@ router.get('/test', (req, res) =>
 // @route   GET api/order
 // @desc    Get all orders
 // @access  Private
-// Query var: page, user, status
+// Query var: page, perPage, user, status
 router.get('/', (req, res) => {
   const errors = {};
-  const perPage = 10;
-  let page = Math.max(0, req.query.page);
+  const perPage = req.query.perPage || 10;
+  const page = Math.max(0, req.query.page);
   var query = {};
   if (req.query.user !== undefined) {
     query.user = req.query.user;
@@ -47,6 +47,7 @@ router.get('/', (req, res) => {
     .limit(perPage)
     .skip(perPage * page)
     .populate('user', ['name'])
+    .populate('table', ['status'])
     .then(orders => {
       if (!orders) {
         errors.ordernotfound = 'Orders not found';
