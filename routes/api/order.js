@@ -34,12 +34,12 @@ router.get('/test', (req, res) =>
 // Query var: page, perPage, user, status
 router.get('/', (req, res) => {
   const errors = {};
-  const perPage = 10
+  const perPage = 10;
   const page = Math.max(0, req.query.page);
   var query = {};
 
   if (req.query.perPage !== undefined) {
-    perPage = parseInt(req.query.perPage)
+    perPage = parseInt(req.query.perPage);
   }
   if (req.query.user !== undefined) {
     query.user = req.query.user;
@@ -152,7 +152,7 @@ router.post('/', (req, res) => {
 router.post('/complete/:_id', (req, res) => {
   // Validation
   //const { errors, isValid } = validateOrderInput(req.body);
-  const {errors};
+  const errors = {};
   // Check Validation
   // if (!isValid) {
   //   return res.status(400).json(errors);
