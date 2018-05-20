@@ -47,7 +47,7 @@ class InvoiceGrid extends Component {
               <TableHeaderColumn>Name</TableHeaderColumn>
               <TableHeaderColumn>Quantity</TableHeaderColumn>
               <TableHeaderColumn>Price</TableHeaderColumn>
-              <TableHeaderColumn>Discount</TableHeaderColumn>
+              <TableHeaderColumn>Discount {`(%)`}</TableHeaderColumn>
               <TableHeaderColumn>Total</TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -76,6 +76,9 @@ class InvoiceGrid extends Component {
         <div>
           <h1 className="text-center m-2">INVOICE</h1>
           <p>
+            <i className="fas fa-coffee" /> {order.table.name}
+          </p>
+          <p>
             <i className="fas fa-user" /> {order.user.name}
           </p>
           <p>
@@ -94,6 +97,7 @@ class InvoiceGrid extends Component {
     } else {
       orderContent = null;
       orderHeader = null;
+      orderFooter = null;
     }
 
     return (

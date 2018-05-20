@@ -10,6 +10,7 @@ import tableImg from './../../img/1200px-A_small_cup_of_coffee.JPG';
 import emptyImg from './../../img/empty.png';
 import awaitImg from './../../img/await.png';
 import servedImg from './../../img/served.png';
+import requestedImg from './../../img/requested.png';
 
 class TableDashboard extends Component {
   state = {
@@ -20,7 +21,7 @@ class TableDashboard extends Component {
 
   handleOpen = table => {
     const { orders } = this.props;
-    let order = orders.find(item => item.table === table);
+    let order = orders.find(item => item.table._id === table);
     this.setState({ open: true, currentTable: table, currentOrder: order });
   };
 
@@ -54,7 +55,9 @@ class TableDashboard extends Component {
                     ? emptyImg
                     : table.status === '1'
                       ? awaitImg
-                      : servedImg
+                      : table.status === '2'
+                        ? servedImg
+                        : requestedImg
                 }
                 alt=""
               />

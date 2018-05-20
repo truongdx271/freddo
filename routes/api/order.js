@@ -47,7 +47,7 @@ router.get('/', (req, res) => {
     .limit(perPage)
     .skip(perPage * page)
     .populate('user', ['name'])
-    .populate('table', ['status'])
+    .populate('table', ['status', 'name'])
     .then(orders => {
       if (!orders) {
         errors.ordernotfound = 'Orders not found';
