@@ -13,6 +13,8 @@ const group = require('./routes/api/group');
 const order = require('./routes/api/order');
 const importitem = require('./routes/api/importitem');
 
+const keys = require('./config/keys');
+
 const app = express();
 
 // Body parser middleware
@@ -58,10 +60,15 @@ server.listen(port, () => console.log(`Server running on port ${port}`));
 const io = require('socket.io')(server);
 
 io.on('connection', socket => {
-  socket.on('subscribeToTimer', interval => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      socket.emit('timer', new Date());
-    }, interval);
+  // socket.on('subscribeToTimer', interval => {
+  //   console.log('client is subscribing to timer with interval ', interval);
+  //   setInterval(() => {
+  //     socket.emit('timer', new Date());
+  //   }, interval);
+  // });
+
+  socket.on(keys.IOTEST, data => {
+    console.log(data);
+    socket.emit(keys.IOTESTDESK, data);
   });
 });

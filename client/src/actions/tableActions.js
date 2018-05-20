@@ -42,20 +42,21 @@ export const createTable = (table, history) => dispatch => {
 
 // Update empty table
 export const updateEmptyTable = table => dispatch => {
+  console.log(table);
   axios
     .post('/api/table', table)
-    .then(res =>
+    .then(res => {
       dispatch({
         type: UPDATE_STATUS_TABLE,
         payload: table
-      })
-    )
-    .catch(err =>
+      });
+    })
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 // Delete table

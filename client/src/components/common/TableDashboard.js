@@ -48,6 +48,7 @@ class TableDashboard extends Component {
 
     // new table for update
     const updateTable = {
+      _id: this.state.currentTable._id,
       name: this.state.currentTable.name,
       section: this.state.currentTable.section,
       status: '0'
@@ -56,6 +57,8 @@ class TableDashboard extends Component {
     //Update action
     this.props.completeOrder(newResult, this.state.currentOrder._id);
     this.props.updateEmptyTable(updateTable);
+
+    alert('Completed!!!!');
   };
 
   render() {
