@@ -90,4 +90,16 @@ io.on('connection', socket => {
     console.log('Completing an invoice...');
     socket.broadcast.emit(keys.INVOICE_COMPLETE_DESK, table);
   });
+
+  // Trigger when listitems was served.. RIP
+  socket.on(keys.INVOICE_LEAVE_QUEUE, order => {
+    console.log('Leaving out of queue...');
+    socket.broadcast.emit(keys.INVOICE_LEAVE_QUEUE_DESK, order);
+  });
+
+  // Trigger when a table change status
+  socket.on(keys.TABLE_UPDATE, table => {
+    console.log('Updating tables...');
+    socket.broadcast.emit(keys.TABLE_UPDATE_DESK, table);
+  });
 });

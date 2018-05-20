@@ -9,7 +9,7 @@ import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import InvoiceGrid from './InvoiceGrid';
-import tableImg from './../../img/1200px-A_small_cup_of_coffee.JPG';
+// import tableImg from './../../img/1200px-A_small_cup_of_coffee.JPG';
 import emptyImg from './../../img/empty.png';
 import awaitImg from './../../img/await.png';
 import servedImg from './../../img/served.png';
@@ -69,7 +69,7 @@ class TableDashboard extends Component {
   render() {
     let tableListContent;
     const { tables } = this.props;
-    const { orders } = this.props;
+    // const { orders } = this.props;
 
     if (tables) {
       tableListContent = (

@@ -5,7 +5,11 @@ import OrderQueue from '../common/OrderQueue';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTables, activeTable } from '../../actions/tableActions';
-import { getFalseOrders, activeOrder } from '../../actions/orderActions';
+import {
+  getFalseOrders,
+  activeOrder,
+  getQueueOrders
+} from '../../actions/orderActions';
 
 class Home extends Component {
   constructor() {
@@ -18,11 +22,12 @@ class Home extends Component {
   componentDidMount() {
     this.props.getTables();
     this.props.getFalseOrders();
+    this.props.getQueueOrders();
   }
 
   render() {
     const { tables } = this.props.table;
-    const { orders } = this.props.order;
+    const { orders, queueOrders } = this.props.order;
 
     return (
       <div className="home">
@@ -40,8 +45,12 @@ class Home extends Component {
             </div>
             <div className="col-lg-4">
               <h3 className="lead text-center"> ORDER QUEUE </h3>
-              {orders !== null &&
-                orders !== undefined && <OrderQueue orders={orders} />}
+              {tables !== null &&
+                tables !== undefined &&
+                queueOrders !== null &&
+                queueOrders !== undefined && (
+                  <OrderQueue tables={tables} orders={queueOrders} />
+                )}
             </div>
           </div>
         </div>
@@ -54,6 +63,7 @@ Home.propTypes = {
   getTables: PropTypes.func.isRequired,
   activeTable: PropTypes.func.isRequired,
   getFalseOrders: PropTypes.func.isRequired,
+  getQueueOrders: PropTypes.func.isRequired,
   activeOrder: PropTypes.func.isRequired,
   table: PropTypes.object.isRequired,
   order: PropTypes.object.isRequired
@@ -68,5 +78,6 @@ export default connect(mapStateToProps, {
   getTables,
   activeTable,
   getFalseOrders,
-  activeOrder
+  activeOrder,
+  getQueueOrders
 })(Home);

@@ -25,10 +25,20 @@ function invoiceComplete(table) {
   socket.emit(events.INVOICE_COMPLETE, table);
 }
 
+function leaveQueue(order) {
+  socket.emit(events.INVOICE_LEAVE_QUEUE, order);
+}
+
+function updateTable(table, cb) {
+  socket.on(events.TABLE_UPDATE_DESK, table => cb(table));
+}
+
 export {
   subscribeToTimer,
   iotest,
   invoiceUpdate,
   invoiceRequest,
-  invoiceComplete
+  invoiceComplete,
+  leaveQueue,
+  updateTable
 };
