@@ -35,11 +35,11 @@ router.get('/test', (req, res) =>
 router.get('/', (req, res) => {
   const errors = {};
   let perPage = 10;
-  let page = Math.max(0, req.query.page);
+  let page = Math.max(0, parseInt(req.query.page));
   var query = {};
 
   if (req.query.perPage !== undefined) {
-    perPage = req.query.perPage;
+    perPage = parseInt(req.query.perPage);
   }
   if (req.query.user !== undefined) {
     query.user = req.query.user;
@@ -47,6 +47,7 @@ router.get('/', (req, res) => {
   if (req.query.status !== undefined) {
     query.status = req.query.status;
   }
+
   Order.find(query)
     .limit(perPage)
     .skip(perPage * page)
