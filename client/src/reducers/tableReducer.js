@@ -31,7 +31,7 @@ export default function(state = initialState, action) {
         table: action.payload
       };
     case UPDATE_STATUS_TABLE:
-      const index = state.tables.findIndex(x => x._id == action.payload._id);
+      const index = state.tables.findIndex(x => x._id === action.payload._id);
       state.tables.splice(index, 1, action.payload);
       return {
         ...state

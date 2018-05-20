@@ -31,7 +31,7 @@ import CreateTable from './components/table/CreateTable';
 import EditTable from './components/table/EditTable';
 
 import './App.css';
-import { subscribeToTimer, iotest, invoiceUpdate, invoiceRequest } from './api';
+import { iotest, invoiceUpdate, invoiceRequest } from './api';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -72,7 +72,7 @@ class App extends Component {
     invoiceRequest(order => {
       console.log(order);
       store.dispatch(getTables());
-      store.dispatch(getFalseOrders());
+      // store.dispatch(getFalseOrders());
     });
   }
 

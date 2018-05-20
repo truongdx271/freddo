@@ -75,11 +75,13 @@ io.on('connection', socket => {
 
   // Trigger when a create or edit an order
   socket.on(keys.INVOICE_UPDATE, order => {
+    console.log('Order updating...');
     socket.broadcast.emit(keys.INVOICE_UPDATE_DESK, order);
   });
 
   // Trigger when a a request to pay
   socket.on(keys.INVOICE_REQUEST, order => {
+    console.log('Requesting to pay...');
     socket.broadcast.emit(keys.INVOICE_REQUEST_DESK, order);
   });
 });

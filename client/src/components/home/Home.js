@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import TableDashboard from '../common/TableDashboard';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Spinner from '../common/Spinner';
 import { getTables, activeTable } from '../../actions/tableActions';
 import { getFalseOrders, activeOrder } from '../../actions/orderActions';
 
@@ -20,7 +19,7 @@ class Home extends Component {
   }
 
   render() {
-    const { tables, loading } = this.props.table;
+    const { tables } = this.props.table;
     const { orders } = this.props.order;
 
     return (
