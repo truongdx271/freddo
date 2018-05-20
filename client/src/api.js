@@ -25,11 +25,19 @@ function invoiceComplete(table) {
   socket.emit(events.INVOICE_COMPLETE, table);
 }
 
+function onInvoiceComplete(cb) {
+  socket.on(events.INVOICE_COMPLETE_DESK, table => cb(table));
+}
+
 function leaveQueue(order) {
   socket.emit(events.INVOICE_LEAVE_QUEUE, order);
 }
 
-function updateTable(table, cb) {
+function onLeaveQueue(cb) {
+  socket.on(events.INVOICE_LEAVE_QUEUE_DESK, order => cb(order));
+}
+
+function updateTable(cb) {
   socket.on(events.TABLE_UPDATE_DESK, table => cb(table));
 }
 
@@ -40,5 +48,7 @@ export {
   invoiceRequest,
   invoiceComplete,
   leaveQueue,
-  updateTable
+  updateTable,
+  onInvoiceComplete,
+  onLeaveQueue
 };

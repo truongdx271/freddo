@@ -88,13 +88,13 @@ io.on('connection', socket => {
   // Trigger when complete an invoice
   socket.on(keys.INVOICE_COMPLETE, table => {
     console.log('Completing an invoice...');
-    socket.broadcast.emit(keys.INVOICE_COMPLETE_DESK, table);
+    io.sockets.emit(keys.INVOICE_COMPLETE_DESK, table);
   });
 
   // Trigger when listitems was served.. RIP
   socket.on(keys.INVOICE_LEAVE_QUEUE, order => {
     console.log('Leaving out of queue...');
-    socket.broadcast.emit(keys.INVOICE_LEAVE_QUEUE_DESK, order);
+    io.sockets.emit(keys.INVOICE_LEAVE_QUEUE_DESK, order);
   });
 
   // Trigger when a table change status

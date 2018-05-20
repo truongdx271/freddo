@@ -15,7 +15,7 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      tableArr: []
+      refresh: false
     };
   }
 
@@ -25,6 +25,16 @@ class Home extends Component {
     this.props.getQueueOrders();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.table) {
+      console.log(nextProps.table.tables);
+    }
+  }
+
+  refreshTable = () => {
+    this.setState({ refresh: !this.state.refresh });
+  };
+
   render() {
     const { tables } = this.props.table;
     const { orders, queueOrders } = this.props.order;
@@ -33,23 +43,31 @@ class Home extends Component {
       <div className="home">
         <div className="container">
           <div className="row">
-            <div className="col-lg-8">
+            <div className="col-lg-9">
               <h3 className="lead text-center"> TABLE </h3>{' '}
               {/* TableListcontent here */}
               {tables !== null &&
                 tables !== undefined &&
                 orders !== null &&
                 orders !== undefined && (
-                  <TableDashboard tables={tables} orders={orders} />
+                  <TableDashboard
+                    refresh={this.refreshTable}
+                    tables={tables}
+                    orders={orders}
+                  />
                 )}
             </div>
-            <div className="col-lg-4">
+            <div className="col-lg-3">
               <h3 className="lead text-center"> ORDER QUEUE </h3>
               {tables !== null &&
                 tables !== undefined &&
                 queueOrders !== null &&
                 queueOrders !== undefined && (
-                  <OrderQueue tables={tables} orders={queueOrders} />
+                  <OrderQueue
+                    refresh={this.refreshTable}
+                    tables={tables}
+                    orders={queueOrders}
+                  />
                 )}
             </div>
           </div>

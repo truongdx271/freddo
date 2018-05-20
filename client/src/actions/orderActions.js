@@ -15,10 +15,12 @@ export const getFalseOrders = () => dispatch => {
   axios
     .get('/api/order?status=false&perPage=50')
     .then(res => {
-      dispatch({
-        type: GET_FALSE_ORDERS,
-        payload: res.data
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: GET_FALSE_ORDERS,
+          payload: res.data
+        });
+      }
     })
     .catch(err => {
       dispatch({
@@ -52,10 +54,12 @@ export const completeOrder = (data, id) => dispatch => {
   axios
     .post(`/api/order/complete/${id}`, data)
     .then(res => {
-      dispatch({
-        type: COMPLETE_ORDER,
-        payload: id
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: COMPLETE_ORDER,
+          payload: id
+        });
+      }
     })
     .catch(err => {
       dispatch({
@@ -70,7 +74,6 @@ export const updateOrder = data => dispatch => {
   axios
     .post('/api/order', data)
     .then(res => {
-      console.log(`ACTION ${res.data}`);
       dispatch({
         type: UPDATE_ORDER,
         payload: res.data

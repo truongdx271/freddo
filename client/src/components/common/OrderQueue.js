@@ -10,7 +10,11 @@ import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment';
 import Coffee from 'material-ui/svg-icons/places/free-breakfast';
 import { updateEmptyTable, getTables } from '../../actions/tableActions';
-import { getFalseOrders, updateOrder } from '../../actions/orderActions';
+import {
+  getFalseOrders,
+  updateOrder,
+  getQueueOrders
+} from '../../actions/orderActions';
 
 import { leaveQueue } from '../../api';
 
@@ -33,12 +37,13 @@ class OrderQueue extends Component {
 
   handleComplete = () => {
     let data = { ...this.state.currentOrder };
-    let table = { ...this.state.currentTable };
+    let tableO = { ...this.state.currentTable };
     let listitems = [];
-    data.listitems = data.listitems.forEach(item => {
+    data.listitems.forEach(item => {
       item.status = true;
       listitems.push(item);
     });
+    data.listitems = listitems;
 
     const orderUpdate = {
       id: data._id,
@@ -54,15 +59,12 @@ class OrderQueue extends Component {
       listitems: JSON.stringify(listitems)
     };
 
-    console.log(orderUpdate);
-
     const tableUpdate = {
-      name: table.name,
-      section: table.section,
+      _id: tableO._id,
+      name: tableO.name,
+      section: tableO.section,
       status: '2'
     };
-
-    console.log(tableUpdate);
 
     // update this order
     this.props.updateOrder(orderUpdate);
@@ -70,10 +72,16 @@ class OrderQueue extends Component {
     this.props.updateEmptyTable(tableUpdate);
     // get all order
     this.props.getFalseOrders();
+    this.props.getQueueOrders();
     // get all table
     this.props.getTables();
 
+    this.props.refresh();
+
     // push socket to server
+    // console.log(data);
+    // console.log(tableUpdate);
+    // console.log(orderUpdate);
     leaveQueue(data);
 
     this.setState({ open: false });
@@ -104,13 +112,16 @@ class OrderQueue extends Component {
                   onClick={() => this.handleOpen(order)}
                 />
                 <List>
-                  {order.listitems.map(item => (
-                    <ListItem
-                      key={item._id}
-                      primaryText={item.name}
-                      secondaryText={moment(item.createAt).fromNow()}
-                    />
-                  ))}
+                  {order.listitems.map(
+                    item =>
+                      !item.status ? (
+                        <ListItem
+                          key={item._id}
+                          primaryText={`${item.name} x${item.quantity}`}
+                          secondaryText={moment(item.createAt).fromNow()}
+                        />
+                      ) : null
+                  )}
                 </List>
               </GridTile>
             ))}
@@ -148,7 +159,8 @@ OrderQueue.propTypes = {
   getFalseOrders: PropTypes.func.isRequired,
   updateOrder: PropTypes.func.isRequired,
   updateEmptyTable: PropTypes.func.isRequired,
-  getTables: PropTypes.func.isRequired
+  getTables: PropTypes.func.isRequired,
+  getQueueOrders: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -159,5 +171,6 @@ export default connect(mapStateToProps, {
   getFalseOrders,
   updateOrder,
   updateEmptyTable,
-  getTables
+  getTables,
+  getQueueOrders
 })(OrderQueue);

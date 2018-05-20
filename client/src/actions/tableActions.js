@@ -14,10 +14,12 @@ export const getTables = () => dispatch => {
   axios
     .get('/api/table')
     .then(res => {
-      dispatch({
-        type: GET_TABLES,
-        payload: res.data
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: GET_TABLES,
+          payload: res.data
+        });
+      }
     })
     .catch(err => {
       dispatch({
@@ -46,10 +48,12 @@ export const updateEmptyTable = table => dispatch => {
   axios
     .post('/api/table', table)
     .then(res => {
-      dispatch({
-        type: UPDATE_STATUS_TABLE,
-        payload: table
-      });
+      if (res.status === 200) {
+        dispatch({
+          type: UPDATE_STATUS_TABLE,
+          payload: table
+        });
+      }
     })
     .catch(err => {
       dispatch({

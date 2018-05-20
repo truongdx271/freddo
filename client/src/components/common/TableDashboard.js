@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { completeOrder } from '../../actions/orderActions';
+import { completeOrder, getQueueOrders } from '../../actions/orderActions';
 import { updateEmptyTable, getTables } from '../../actions/tableActions';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
@@ -21,6 +21,7 @@ import { invoiceComplete } from '../../api';
 class TableDashboard extends Component {
   state = {
     open: false,
+    completed: false,
     currentTable: {},
     currentOrder: {}
   };
@@ -60,9 +61,13 @@ class TableDashboard extends Component {
     //Update action
     this.props.completeOrder(newResult, this.state.currentOrder._id);
     this.props.updateEmptyTable(updateTable);
-    this.props.getTables();
+    // this.props.getTables();
+    this.props.getQueueOrders();
+
+    this.props.refresh();
 
     invoiceComplete(updateTable);
+    this.setState({ open: false });
     alert('Completed!!!!');
   };
 
@@ -74,7 +79,7 @@ class TableDashboard extends Component {
     if (tables) {
       tableListContent = (
         <Paper zDepth={2}>
-          <GridList cols={3}>
+          <GridList cols={4}>
             {tables.map(table => (
               <GridTile
                 title={table.name}
@@ -126,7 +131,6 @@ class TableDashboard extends Component {
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          {/* <img src={tableImg} alt="" style={{ width: '100%' }} /> */}
           <InvoiceGrid order={this.state.currentOrder} />
         </Dialog>
       </div>
@@ -137,6 +141,7 @@ class TableDashboard extends Component {
 TableDashboard.propTypes = {
   completeOrder: PropTypes.func.isRequired,
   updateEmptyTable: PropTypes.func.isRequired,
+  getQueueOrders: PropTypes.func.isRequired,
   getTables: PropTypes.func.isRequired,
   tables: PropTypes.array.isRequired,
   orders: PropTypes.array.isRequired
@@ -149,5 +154,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   completeOrder,
   updateEmptyTable,
-  getTables
+  getTables,
+  getQueueOrders
 })(TableDashboard);

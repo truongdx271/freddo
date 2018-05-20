@@ -103,8 +103,8 @@ router.post('/', (req, res) => {
 
   //Get fields
   const orderFields = {};
-  if (req.body.user) orderFields.user = req.body.user;
   if (req.user) orderFields.user = req.user.id; // User id
+  if (req.body.user) orderFields.user = req.body.user;
   if (req.body.table) orderFields.table = req.body.table; // table ID
   if (req.body.billdate) orderFields.billdate = req.body.billdate;
   if (req.body.amount) orderFields.amount = req.body.amount;

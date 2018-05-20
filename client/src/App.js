@@ -5,7 +5,7 @@ import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
 import { getTables } from './actions/tableActions';
-import { getFalseOrders } from './actions/orderActions';
+import { getFalseOrders, getQueueOrders } from './actions/orderActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { Provider } from 'react-redux';
@@ -31,7 +31,14 @@ import CreateTable from './components/table/CreateTable';
 import EditTable from './components/table/EditTable';
 
 import './App.css';
-import { iotest, invoiceUpdate, invoiceRequest, updateTable } from './api';
+import {
+  iotest,
+  invoiceUpdate,
+  invoiceRequest,
+  updateTable,
+  onLeaveQueue,
+  onInvoiceComplete
+} from './api';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -66,6 +73,7 @@ class App extends Component {
       console.log(order);
       store.dispatch(getTables());
       store.dispatch(getFalseOrders());
+      store.dispatch(getQueueOrders());
     });
 
     // Update table status after request to pay
@@ -77,6 +85,18 @@ class App extends Component {
 
     // Update table when change table action
     updateTable(table => {
+      console.log(table);
+      store.dispatch(getTables());
+    });
+
+    // update table when leaveQueue
+    onLeaveQueue(order => {
+      console.log(order);
+      store.dispatch(getTables());
+    });
+
+    //Update table when complete
+    onInvoiceComplete(table => {
       console.log(table);
       store.dispatch(getTables());
     });
