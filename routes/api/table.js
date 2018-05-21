@@ -87,11 +87,13 @@ router.post('/', (req, res) => {
   Table.findOne({ name: req.body.name }).then(table => {
     if (table) {
       // Update
-      Table.findOneAndUpdate(
-        { name: req.body.name },
-        { $set: tableFields },
-        { new: true }
-      ).then(table => res.json(table));
+      // Table.findOneAndUpdate(
+      //   { name: req.body.name },
+      //   { $set: tableFields },
+      //   { new: true }
+      // ).then(table => res.json(table));
+      errors.name = 'Table name must be unique';
+      res.status(400).json(errors);
     } else {
       //Create
       new Table(tableFields).save().then(table => {

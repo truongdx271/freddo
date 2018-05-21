@@ -25,7 +25,7 @@ router.get('/test', (req, res) => res.json({ msg: 'Roles Works' }));
 // @access  private
 router.post('/', (req, res) => {
   // Validation
-
+  const errors = {};
   //Get fields
   const roleFields = {};
   if (req.body.name) roleFields.name = req.body.name;
@@ -36,16 +36,53 @@ router.post('/', (req, res) => {
   Role.findOne({ name: req.body.name }).then(role => {
     if (role) {
       // Update
-      Role.findOneAndUpdate(
-        { name: req.body.name },
-        { $set: roleFields },
-        { new: true }
-      ).then(role => res.json(role));
+      // Role.findOneAndUpdate(
+      //   { name: req.body.name },
+      //   { $set: roleFields },
+      //   { new: true }
+      // ).then(role => res.json(role));
+
+      // new rule
+      errors.name = 'Role name must be unique';
+      res.status(400).json(errors);
     } else {
       //Create
       new Role(roleFields).save().then(role => {
         res.json(role);
       });
+    }
+  });
+});
+
+// @route   POST api/role/update/:role_id
+// @desc    Update Role
+// @access  private
+router.post('/update/:role_id', (req, res) => {
+  const errors = {};
+
+  const roleFields = {};
+  if (req.body.name) roleFields.name = req.body.name;
+  if (req.body.description) roleFields.description = req.body.description;
+  if (typeof req.body.permissions !== 'undefined')
+    roleFields.permissions = req.body.permissions.split(',');
+
+  Role.findOne({ _id: req.params.role_id }).then(role => {
+    if (role) {
+      //Update here
+      Role.findOneAndUpdate(
+        {
+          _id: req.params.role_id
+        },
+        {
+          $set: roleFields
+        },
+        {
+          new: true
+        }
+      ).then(updatedRole => res.json(updatedRole));
+    } else {
+      errors.rolenotfound = 'Role not found';
+      res.status(404).json(errors);
     }
   });
 });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createGroup, getGroups } from '../../actions/groupActions';
+import { editGroup, getGroups } from '../../actions/groupActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import isEmpty from '../../validation/is-empty';
 
@@ -10,6 +10,7 @@ class EditGroup extends Component {
   constructor() {
     super();
     this.state = {
+      _id: '',
       name: '',
       description: '',
       grouptype: '',
@@ -39,6 +40,7 @@ class EditGroup extends Component {
 
       // Set component field
       this.setState({
+        _id: group._id,
         name: group.name,
         description: group.description,
         grouptype: group.grouptype
@@ -58,12 +60,13 @@ class EditGroup extends Component {
     e.preventDefault();
 
     const newGroup = {
+      _id: this.state._id,
       name: this.state.name,
       description: this.state.description,
       grouptype: this.state.grouptype
     };
 
-    this.props.createGroup(newGroup, this.props.history);
+    this.props.editGroup(newGroup, this.props.history);
   }
 
   render() {
@@ -122,7 +125,7 @@ class EditGroup extends Component {
 }
 
 EditGroup.propTypes = {
-  createGroup: PropTypes.func.isRequired,
+  editGroup: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
   group: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -133,6 +136,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { createGroup, getGroups })(
+export default connect(mapStateToProps, { editGroup, getGroups })(
   withRouter(EditGroup)
 );

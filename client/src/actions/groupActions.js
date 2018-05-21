@@ -39,6 +39,19 @@ export const createGroup = (group, history) => dispatch => {
     );
 };
 
+// Edit group
+export const editGroup = (group, history) => dispatch => {
+  axios
+    .post(`/api/group/update/${group._id}`, group)
+    .then(res => history.push('/group'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Delete group
 export const deleteGroup = id => dispatch => {
   axios

@@ -21,9 +21,11 @@ router.use(errorHandle);
 // @route   GET api/group/test
 // @desc    Tests role route
 // @access  Private
-router.get('/test', (req, res) => res.json({
-  msg: 'Group Works'
-}));
+router.get('/test', (req, res) =>
+  res.json({
+    msg: 'Group Works'
+  })
+);
 
 // @route   GET api/group
 // @desc    Return all menu group
@@ -46,8 +48,8 @@ router.get('/', (req, res) => {
 router.get('/:group_id', (req, res) => {
   const errors = {};
   Group.find({
-      _id: req.params.group_id
-    })
+    _id: req.params.group_id
+  })
     .then(group => {
       if (!group) {
         errors.groupnotfound = 'Groups not found';
@@ -56,20 +58,19 @@ router.get('/:group_id', (req, res) => {
         res.json(menugroup);
       }
     })
-    .catch(err => res.status(404).json({
-      groupnotfound: 'Groups not found'
-    }));
+    .catch(err =>
+      res.status(404).json({
+        groupnotfound: 'Groups not found'
+      })
+    );
 });
 
 // @route   POST api/group
-// @desc    Create or edit a group
+// @desc    Create a group
 // @access  private
 router.post('/', (req, res) => {
   // Validation
-  const {
-    errors,
-    isValid
-  } = validateGroupInput(req.body);
+  const { errors, isValid } = validateGroupInput(req.body);
 
   // Check Validation
   if (!isValid) {
@@ -87,18 +88,54 @@ router.post('/', (req, res) => {
   }).then(group => {
     if (group) {
       // Update
-      Group.findOneAndUpdate({
-        name: req.body.name
-      }, {
-        $set: groupFields
-      }, {
-        new: true
-      }).then(group => res.json(group));
+      // Group.findOneAndUpdate({
+      //   name: req.body.name
+      // }, {
+      //   $set: groupFields
+      // }, {
+      //   new: true
+      // }).then(group => res.json(group));
+
+      // Now need to be unique
+      errors.name = 'Group name must be unique';
+      res.status(400).json(errors);
     } else {
       //Create
       new Group(groupFields).save().then(group => {
         res.json(group);
       });
+    }
+  });
+});
+
+// @route   POST api/group/update/:group_id
+// @desc    Update
+// @access  private
+router.post('/update/:group_id', (req, res) => {
+  const errors = {};
+
+  const groupFields = {};
+  if (req.body.name) groupFields.name = req.body.name;
+  if (req.body.name) groupFields.grouptype = req.body.grouptype;
+  if (req.body.description) groupFields.description = req.body.description;
+
+  Group.findOne({ _id: req.params.group_id }).then(group => {
+    if (group) {
+      //Update here
+      Group.findOneAndUpdate(
+        {
+          _id: req.body._id
+        },
+        {
+          $set: groupFields
+        },
+        {
+          new: true
+        }
+      ).then(updatedGroup => res.json(updatedGroup));
+    } else {
+      errors.groupnotfound = 'Group not found';
+      res.status(404).json(errors);
     }
   });
 });
@@ -112,16 +149,18 @@ router.delete(
   errorHandle,
   (req, res) => {
     Group.findOneAndRemove({
-        _id: req.params.group_id
-      })
+      _id: req.params.group_id
+    })
       .then(() => {
         res.json({
           success: true
         });
       })
-      .catch(err => res.status(404).json({
-        groupnotfound: 'Group not found'
-      }));
+      .catch(err =>
+        res.status(404).json({
+          groupnotfound: 'Group not found'
+        })
+      );
   }
 );
 

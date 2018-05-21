@@ -74,6 +74,7 @@ class EditTable extends Component {
                   value={this.state.name}
                   onChange={this.onChange}
                   error={errors.name}
+                  disabled="disabled"
                 />
                 <TextFieldGroup
                   placeholder="Section"
