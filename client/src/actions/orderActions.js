@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   GET_FALSE_ORDERS,
   GET_QUEUE_ORDERS,
+  GET_ALL_ORDERS,
   ORDER_LOADING,
   ACTIVE_ORDER,
   COMPLETE_ORDER,
@@ -25,6 +26,27 @@ export const getFalseOrders = () => dispatch => {
     .catch(err => {
       dispatch({
         type: GET_FALSE_ORDERS,
+        payload: null
+      });
+    });
+};
+
+// Get All order that status = false
+export const getTrueOrders = () => dispatch => {
+  dispatch(setOrderLoading());
+  axios
+    .get('/api/order?status=true&perPage=100')
+    .then(res => {
+      if (res.status === 200) {
+        dispatch({
+          type: GET_ALL_ORDERS,
+          payload: res.data
+        });
+      }
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ALL_ORDERS,
         payload: null
       });
     });

@@ -10,10 +10,10 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import InvoiceGrid from './InvoiceGrid';
 // import tableImg from './../../img/1200px-A_small_cup_of_coffee.JPG';
-import emptyImg from './../../img/empty.png';
-import awaitImg from './../../img/await.png';
-import servedImg from './../../img/served.png';
-import requestedImg from './../../img/requested.png';
+import emptyImg from './../../img/empty_new.png';
+import awaitImg from './../../img/qing_new.png';
+import servedImg from './../../img/served_new.png';
+import requestedImg from './../../img/request_new.png';
 import Paper from 'material-ui/Paper';
 
 import { invoiceComplete } from '../../api';
@@ -83,6 +83,8 @@ class TableDashboard extends Component {
             {tables.map(table => (
               <GridTile
                 title={table.name}
+                // subtitle={table.section}
+                titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
                 key={table._id}
                 actionIcon={
                   table.status !== '0' ? (

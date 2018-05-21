@@ -11,12 +11,58 @@ import {
   getQueueOrders
 } from '../../actions/orderActions';
 
+import {
+  iotest,
+  invoiceUpdate,
+  invoiceRequest,
+  updateTable,
+  onLeaveQueue,
+  onInvoiceComplete
+} from '../../api';
+
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       refresh: false
     };
+
+    // TEST SOCKET NEW
+    // Test socket
+    iotest(data => console.log(data));
+
+    // Update table status after create an order
+    invoiceUpdate(order => {
+      console.log(order);
+      this.props.getTables();
+      this.props.getFalseOrders();
+      this.props.getQueueOrders();
+    });
+
+    // Update table status after request to pay
+    invoiceRequest(order => {
+      console.log(order);
+      this.props.getTables();
+      // this.props.getFalseOrders());
+    });
+
+    // Update table when change table action
+    updateTable(table => {
+      console.log(table);
+      this.props.getTables();
+    });
+
+    // update table when leaveQueue
+    onLeaveQueue(order => {
+      console.log(order);
+      this.props.getTables();
+    });
+
+    //Update table when complete
+    onInvoiceComplete(table => {
+      console.log(table);
+      this.props.getTables();
+    });
   }
 
   componentDidMount() {
@@ -36,7 +82,7 @@ class Home extends Component {
   };
 
   render() {
-    const { tables, loading } = this.props.table;
+    const { tables } = this.props.table;
     const { orders, queueOrders } = this.props.order;
 
     return (

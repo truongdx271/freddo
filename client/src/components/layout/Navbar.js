@@ -55,12 +55,12 @@ class Navbar extends Component {
             Users
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/role">
             {' '}
             Role
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link" to="/table">
             {' '}

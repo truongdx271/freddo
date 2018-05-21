@@ -8,8 +8,8 @@ import {
   deleteGroup
 } from '../../actions/groupActions';
 import { Link } from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
@@ -26,7 +26,7 @@ class Group extends Component {
   buttonFormatter(cell, row, rowIndex) {
     return (
       <div className="m-auto text-center">
-        <Link to="/edit-group" className="btn btn-primary m-1">
+        {/* <Link to="/edit-group" className="btn btn-primary m-1">
           <i className="far fa-edit" />
         </Link>
         <button
@@ -38,7 +38,18 @@ class Group extends Component {
           }}
         >
           <i className="fas fa-eraser" />
-        </button>{' '}
+        </button>{' '} */}
+        <Link to="/edit-group">
+          <RaisedButton label="Edit" primary={true} />
+        </Link>{' '}
+        <RaisedButton
+          label="DELETE"
+          secondary={true}
+          onClick={() => {
+            if (window.confirm('Are you sure you wish to delete this group?'))
+              this.onDeleteClick(row._id);
+          }}
+        />
       </div>
     );
   }
@@ -108,8 +119,8 @@ class Group extends Component {
         </div>
         <div className="row mb-3">
           <div className="col-md-4">
-            <Link to="/create-group" className="btn btn-success">
-              Create New
+            <Link to="/create-group">
+              <RaisedButton label="Create New" backgroundColor="#448AFF" />
             </Link>
           </div>
         </div>

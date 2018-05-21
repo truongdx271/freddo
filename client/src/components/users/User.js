@@ -5,6 +5,7 @@ import Spinner from '../common/Spinner';
 import { getUsers, activeUser, deleteUser } from '../../actions/userActions';
 import { Link } from 'react-router-dom';
 
+import RaisedButton from 'material-ui/RaisedButton';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -21,10 +22,10 @@ class User extends Component {
   buttonFormatter(cell, row, rowIndex) {
     return (
       <div className="m-auto text-center">
-        <Link to="/edit-user" className="btn btn-primary m-1">
+        {/* <Link to="/edit-user" className="btn btn-primary m-1">
           <i className="far fa-edit" />
-        </Link>
-        <button
+        </Link> */}
+        {/* <button
           className="btn btn-danger m-1"
           type="button"
           onClick={() => {
@@ -33,7 +34,15 @@ class User extends Component {
           }}
         >
           <i className="fas fa-eraser" />
-        </button>{' '}
+        </button>{' '} */}
+        <RaisedButton
+          label="DELETE"
+          secondary={true}
+          onClick={() => {
+            if (window.confirm('Are you sure you wish to delete this user?'))
+              this.onDeleteClick(row._id);
+          }}
+        />
       </div>
     );
   }
@@ -117,8 +126,8 @@ class User extends Component {
         </div>
         <div className="row mb-3">
           <div className="col-md-4">
-            <Link to="/create-user" className="btn btn-success">
-              Create New
+            <Link to="/create-user">
+              <RaisedButton label="Create New" backgroundColor="#448AFF" />
             </Link>
           </div>
         </div>

@@ -4,8 +4,8 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import { clearCurrentProfile } from './actions/profileActions';
-import { getTables } from './actions/tableActions';
-import { getFalseOrders, getQueueOrders } from './actions/orderActions';
+// import { getTables } from './actions/tableActions';
+// import { getFalseOrders, getQueueOrders } from './actions/orderActions';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { Provider } from 'react-redux';
@@ -31,16 +31,18 @@ import Table from './components/table/Table';
 import CreateTable from './components/table/CreateTable';
 import EditTable from './components/table/EditTable';
 import User from './components/users/User';
+import CreateUser from './components/users/CreateUser';
+import Order from './components/order/Order';
 
 import './App.css';
-import {
-  iotest,
-  invoiceUpdate,
-  invoiceRequest,
-  updateTable,
-  onLeaveQueue,
-  onInvoiceComplete
-} from './api';
+// import {
+//   iotest,
+//   invoiceUpdate,
+//   invoiceRequest,
+//   updateTable,
+//   onLeaveQueue,
+//   onInvoiceComplete
+// } from './api';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -64,45 +66,43 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  // was inside contructor
+  //// TEST MOVE TO HOME
+  // // Test socket
+  // iotest(data => console.log(data));
 
-    // Test socket
-    iotest(data => console.log(data));
+  // // Update table status after create an order
+  // invoiceUpdate(order => {
+  //   console.log(order);
+  //   store.dispatch(getTables());
+  //   store.dispatch(getFalseOrders());
+  //   store.dispatch(getQueueOrders());
+  // });
 
-    // Update table status after create an order
-    invoiceUpdate(order => {
-      console.log(order);
-      store.dispatch(getTables());
-      store.dispatch(getFalseOrders());
-      store.dispatch(getQueueOrders());
-    });
+  // // Update table status after request to pay
+  // invoiceRequest(order => {
+  //   console.log(order);
+  //   store.dispatch(getTables());
+  //   // store.dispatch(getFalseOrders());
+  // });
 
-    // Update table status after request to pay
-    invoiceRequest(order => {
-      console.log(order);
-      store.dispatch(getTables());
-      // store.dispatch(getFalseOrders());
-    });
+  // // Update table when change table action
+  // updateTable(table => {
+  //   console.log(table);
+  //   store.dispatch(getTables());
+  // });
 
-    // Update table when change table action
-    updateTable(table => {
-      console.log(table);
-      store.dispatch(getTables());
-    });
+  // // update table when leaveQueue
+  // onLeaveQueue(order => {
+  //   console.log(order);
+  //   store.dispatch(getTables());
+  // });
 
-    // update table when leaveQueue
-    onLeaveQueue(order => {
-      console.log(order);
-      store.dispatch(getTables());
-    });
-
-    //Update table when complete
-    onInvoiceComplete(table => {
-      console.log(table);
-      store.dispatch(getTables());
-    });
-  }
+  // //Update table when complete
+  // onInvoiceComplete(table => {
+  //   console.log(table);
+  //   store.dispatch(getTables());
+  // });
 
   render() {
     return (
@@ -132,6 +132,9 @@ class App extends Component {
                   <PrivateRoute exact path="/home" component={Home} />
                 </Switch>
                 <Switch>
+                  <PrivateRoute exact path="/order" component={Order} />
+                </Switch>
+                <Switch>
                   <AdminRoute exact path="/group" component={Group} />
                 </Switch>
                 <Switch>
@@ -155,10 +158,17 @@ class App extends Component {
                   />
                 </Switch>
                 <Switch>
+                  <AdminRoute exact path="/edit-table" component={EditTable} />
+                </Switch>
+                <Switch>
                   <AdminRoute exact path="/users" component={User} />
                 </Switch>
                 <Switch>
-                  <AdminRoute exact path="/edit-table" component={EditTable} />
+                  <AdminRoute
+                    exact
+                    path="/create-user"
+                    component={CreateUser}
+                  />
                 </Switch>
               </div>
               <Route exact path="/not-found" component={NotFound} />

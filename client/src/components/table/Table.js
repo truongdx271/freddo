@@ -8,8 +8,8 @@ import {
   deleteTable
 } from '../../actions/tableActions';
 import { Link } from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
@@ -26,19 +26,17 @@ class Table extends Component {
   buttonFormatter(cell, row, rowIndex) {
     return (
       <div className="m-auto text-center">
-        <Link to="/edit-table" className="btn btn-primary m-1">
-          <i className="far fa-edit" />
-        </Link>
-        <button
-          className="btn btn-danger m-1"
-          type="button"
+        <Link to="/edit-table">
+          <RaisedButton label="Edit" primary={true} />
+        </Link>{' '}
+        <RaisedButton
+          label="DELETE"
+          secondary={true}
           onClick={() => {
             if (window.confirm('Are you sure you wish to delete this table?'))
               this.onDeleteClick(row._id);
           }}
-        >
-          <i className="fas fa-eraser" />
-        </button>{' '}
+        />
       </div>
     );
   }
@@ -90,6 +88,7 @@ class Table extends Component {
           pagination={paginationFactory()}
           rowEvents={rowEvents}
           filter={filterFactory()}
+          // rowClasses="align-middle"
         />
       );
     }
@@ -103,8 +102,8 @@ class Table extends Component {
         </div>
         <div className="row mb-3">
           <div className="col-md-4">
-            <Link to="/create-table" className="btn btn-success">
-              Create New
+            <Link to="/create-table">
+              <RaisedButton label="Create New" backgroundColor="#448AFF" />
             </Link>
           </div>
         </div>

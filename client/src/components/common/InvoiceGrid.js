@@ -86,7 +86,7 @@ class InvoiceGrid extends Component {
             <People /> {order.user.name}{' '}
           </p>
           <p>
-            <Clock /> {moment().format('MMMM Do YYYY, h:mm:ss a')}{' '}
+            <Clock /> {moment(order.billdate).format('MMMM Do YYYY, h:mm:ss a')}{' '}
           </p>
         </div>
       );

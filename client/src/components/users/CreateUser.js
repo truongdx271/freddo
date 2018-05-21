@@ -38,7 +38,7 @@ class CreateUser extends Component {
       password2: '123456'
     };
 
-    this.props.createTable(newUser, this.props.history);
+    this.props.createUser(newUser, this.props.history);
   }
 
   render() {

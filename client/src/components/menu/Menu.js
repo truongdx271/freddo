@@ -8,8 +8,8 @@ import {
   deleteItem
 } from '../../actions/menuActions';
 import { Link } from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
@@ -26,19 +26,17 @@ class Menu extends Component {
   buttonFormatter(cell, row, rowIndex) {
     return (
       <div className="m-auto text-center">
-        <Link to="/edit-item" className="btn btn-primary m-1">
-          <i className="far fa-edit fa-sm" />
-        </Link>
-        <button
-          className="btn btn-danger m-1"
-          type="button"
+        <Link to="/edit-item">
+          <RaisedButton label="Edit" primary={true} />
+        </Link>{' '}
+        <RaisedButton
+          label="DELETE"
+          secondary={true}
           onClick={() => {
             if (window.confirm('Are you sure you wish to delete this item?'))
               this.onDeleteClick(row._id);
           }}
-        >
-          <i className="fas fa-eraser fa-sm" />
-        </button>{' '}
+        />
       </div>
     );
   }
@@ -51,17 +49,25 @@ class Menu extends Component {
         dataField: 'code',
         text: 'Product code',
         headerClasses: 'text-center',
+        headerStyle: { width: '18%' },
         filter: textFilter()
       },
       {
         dataField: 'name',
         text: 'Product Name',
         headerClasses: 'text-center',
+        headerStyle: { width: '20%' },
         filter: textFilter()
       },
       {
         dataField: 'description',
         text: 'Description',
+        headerClasses: 'text-center'
+        // filter: textFilter()
+      },
+      {
+        dataField: 'unit',
+        text: 'Unit',
         headerClasses: 'text-center'
         // filter: textFilter()
       },
@@ -128,8 +134,8 @@ class Menu extends Component {
         </div>
         <div className="row mb-3">
           <div className="col-md-4">
-            <Link to="/create-item" className="btn btn-success">
-              Create New
+            <Link to="/create-item">
+              <RaisedButton label="Create New" backgroundColor="#448AFF" />
             </Link>
           </div>
         </div>

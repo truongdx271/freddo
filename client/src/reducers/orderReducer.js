@@ -4,10 +4,12 @@ import {
   ACTIVE_ORDER,
   COMPLETE_ORDER,
   UPDATE_ORDER,
-  GET_QUEUE_ORDERS
+  GET_QUEUE_ORDERS,
+  GET_ALL_ORDERS
 } from '../actions/types';
 
 const initialState = {
+  all: null,
   orders: null,
   queueOrders: null,
   order: null,
@@ -33,6 +35,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         orders: action.payload,
+        loading: false
+      };
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        all: action.payload,
         loading: false
       };
     case GET_QUEUE_ORDERS:
