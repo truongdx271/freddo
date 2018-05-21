@@ -4,7 +4,8 @@ module.exports = codegenerator = (data, cb) => {
     .map(item => {
       return item[0];
     })
-    .join('');
+    .join('')
+    .toUpperCase();
 
   let milliseconds = new Date().getTime();
   code += '-';

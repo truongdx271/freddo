@@ -84,15 +84,15 @@ class User extends Component {
     } else {
       let userArr = [];
 
-      users.map(item => {
+      userArr = users.map(item => {
         const userObj = {};
         userObj._id = item._id;
         userObj.name = item.name;
         userObj.email = item.email;
         userObj.avatar = item.avatar;
         userObj.role = item.role.name;
-        console.log(item);
-        userArr.push(userObj);
+        //userArr.push(userObj);
+        return userObj;
       });
 
       userTable = (
