@@ -46,7 +46,7 @@ export const createTable = (table, history) => dispatch => {
 export const updateEmptyTable = table => dispatch => {
   console.log(table);
   axios
-    .post('/api/table', table)
+    .post(`/api/table/update/${table._id}?status=${table.status}`)
     .then(res => {
       if (res.status === 200) {
         dispatch({
