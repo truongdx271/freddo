@@ -29,8 +29,8 @@ export const getUsers = () => dispatch => {
 // Create user
 export const createUser = (user, history) => dispatch => {
   axios
-    .post('/api/users', user)
-    .then(res => history.push('/group'))
+    .post('/api/users/register', user)
+    .then(res => history.push('/users'))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

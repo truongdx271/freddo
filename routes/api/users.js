@@ -72,7 +72,7 @@ router.post('/register', (req, res) => {
 
           // Set default Role
           Role.findOne({
-            name: 'normal'
+            name: 'staff'
           }).then(role => {
             if (role) {
               newUser.role = role.id;
