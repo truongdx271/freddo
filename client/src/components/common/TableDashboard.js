@@ -67,7 +67,7 @@ class TableDashboard extends Component {
     this.props.refresh();
 
     invoiceComplete(updateTable);
-    this.setState({ open: false });
+    // this.setState({ open: false });
     alert('Completed!!!!');
   };
 

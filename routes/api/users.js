@@ -172,14 +172,16 @@ router.get('/current', checkForPermissions, errorHandle, (req, res) => {
 // @access  Private
 router.get('/all', checkForPermissions, errorHandle, (req, res) => {
   const errors = {};
-  User.find().then(users => {
-    if (!users) {
-      errors.usersnotfound = 'Users not found';
-      res.status(404).json(errors);
-    } else {
-      res.json(users);
-    }
-  });
+  User.find()
+    .populate('role', ['name'])
+    .then(users => {
+      if (!users) {
+        errors.usersnotfound = 'Users not found';
+        res.status(404).json(errors);
+      } else {
+        res.json(users);
+      }
+    });
 });
 
 // @route   DELETE api/users/:user_id

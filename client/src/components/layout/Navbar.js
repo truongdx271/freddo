@@ -41,14 +41,8 @@ class Navbar extends Component {
       </ul>
     );
 
-    const authLinks2nd = (
+    const authLinksAdmin = (
       <ul className="navbar-nav mr-auto">
-        {/* <li className="nav-item">
-                  <Link className="nav-link" to="/profiles">
-                    {" "}
-                    Developers
-                  </Link>
-                </li> */}
         <li className="nav-item">
           <Link className="nav-link" to="/home">
             {' '}
@@ -59,6 +53,12 @@ class Navbar extends Component {
           <Link className="nav-link" to="/users">
             {' '}
             Users
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/role">
+            {' '}
+            Role
           </Link>
         </li>
         <li className="nav-item">
@@ -77,6 +77,47 @@ class Navbar extends Component {
           <Link className="nav-link" to="/menu">
             {' '}
             Menu
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/order">
+            {' '}
+            Order
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/import">
+            {' '}
+            Import
+          </Link>
+        </li>
+      </ul>
+    );
+
+    const authLinksStaff = (
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item">
+          <Link className="nav-link" to="/home">
+            {' '}
+            Home
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/menu">
+            {' '}
+            Menu
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/order">
+            {' '}
+            Order
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/import">
+            {' '}
+            Import
           </Link>
         </li>
       </ul>
@@ -117,7 +158,11 @@ class Navbar extends Component {
             </button>
 
             <div className="collapse navbar-collapse" id="mobile-nav">
-              {isAuthenticated ? authLinks2nd : null}
+              {isAuthenticated && user.role === 'staff'
+                ? authLinksStaff
+                : isAuthenticated && user.role === 'admin'
+                  ? authLinksAdmin
+                  : null}
               {isAuthenticated ? authLinks : guestLinks}
             </div>
           </div>

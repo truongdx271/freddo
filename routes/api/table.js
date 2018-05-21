@@ -101,6 +101,32 @@ router.post('/', (req, res) => {
   });
 });
 
+// @route   POST api/table/update/:table_id?status=:status
+// @desc    Update table status
+// @access  private
+router.post('/update/:table_id', (req, res) => {
+  const errors = {};
+
+  Table.findById(req.params.table_id, (err, table) => {
+    if (err) {
+      errors.query = 'Error while quering';
+      res.status(404).json(errors);
+    }
+
+    if (req.query.status) {
+      table.status = req.query.status;
+    }
+
+    table.save((err, updatedTable) => {
+      if (err) {
+        errors.updatetable = 'Error while update table';
+        res.status(404).json(errors);
+      }
+      res.json(updatedTable);
+    });
+  });
+});
+
 // @route   DELETE api/table/:table_id
 // @desc    Delete table by id
 // @access  Private

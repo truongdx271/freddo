@@ -36,7 +36,7 @@ class Home extends Component {
   };
 
   render() {
-    const { tables } = this.props.table;
+    const { tables, loading } = this.props.table;
     const { orders, queueOrders } = this.props.order;
 
     return (

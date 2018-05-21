@@ -10,6 +10,9 @@ import {
 } from 'material-ui/Table';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import Coffee from 'material-ui/svg-icons/places/free-breakfast';
+import Clock from 'material-ui/svg-icons/action/query-builder';
+import People from 'material-ui/svg-icons/action/account-circle';
 
 class InvoiceGrid extends Component {
   state = {
@@ -77,14 +80,13 @@ class InvoiceGrid extends Component {
         <div>
           <h1 className="text-center m-2">INVOICE</h1>
           <p>
-            <i className="fas fa-coffee" /> {order.table.name}
+            <Coffee /> {order.table.name}
           </p>
           <p>
-            <i className="fas fa-user" /> {order.user.name}
+            <People /> {order.user.name}{' '}
           </p>
           <p>
-            <i className="far fa-clock" />{' '}
-            {moment().format('MMMM Do YYYY, h:mm:ss a')}
+            <Clock /> {moment().format('MMMM Do YYYY, h:mm:ss a')}{' '}
           </p>
         </div>
       );

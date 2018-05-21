@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import PrivateRoute from './components/common/PrivateRoute';
+import AdminRoute from './components/common/AdminRoute';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -29,6 +30,7 @@ import EditGroup from './components/group/EditGroup';
 import Table from './components/table/Table';
 import CreateTable from './components/table/CreateTable';
 import EditTable from './components/table/EditTable';
+import User from './components/users/User';
 
 import './App.css';
 import {
@@ -130,38 +132,33 @@ class App extends Component {
                   <PrivateRoute exact path="/home" component={Home} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/group" component={Group} />
+                  <AdminRoute exact path="/group" component={Group} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute
+                  <AdminRoute
                     exact
                     path="/create-group"
                     component={CreateGroup}
                   />
                 </Switch>
                 <Switch>
-                  <PrivateRoute
-                    exact
-                    path="/edit-group"
-                    component={EditGroup}
-                  />
+                  <AdminRoute exact path="/edit-group" component={EditGroup} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/table" component={Table} />
+                  <AdminRoute exact path="/table" component={Table} />
                 </Switch>
                 <Switch>
-                  <PrivateRoute
+                  <AdminRoute
                     exact
                     path="/create-table"
                     component={CreateTable}
                   />
                 </Switch>
                 <Switch>
-                  <PrivateRoute
-                    exact
-                    path="/edit-table"
-                    component={EditTable}
-                  />
+                  <AdminRoute exact path="/users" component={User} />
+                </Switch>
+                <Switch>
+                  <AdminRoute exact path="/edit-table" component={EditTable} />
                 </Switch>
               </div>
               <Route exact path="/not-found" component={NotFound} />
