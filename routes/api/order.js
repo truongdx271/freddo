@@ -50,6 +50,7 @@ router.get('/', (req, res) => {
 
   Order.find(query)
     .limit(perPage)
+    .sort({ billdate: -1 })
     .skip(perPage * page)
     .populate('user', ['name'])
     .populate('table', ['status', 'name'])
