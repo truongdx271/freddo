@@ -33,16 +33,11 @@ import EditTable from './components/table/EditTable';
 import User from './components/users/User';
 import CreateUser from './components/users/CreateUser';
 import Order from './components/order/Order';
+import Import from './components/import-item/Import';
+import CreateImportItem from './components/import-item/CreateImportItem';
+import EditImportItem from './components/import-item/EditImportItem';
 
 import './App.css';
-// import {
-//   iotest,
-//   invoiceUpdate,
-//   invoiceRequest,
-//   updateTable,
-//   onLeaveQueue,
-//   onInvoiceComplete
-// } from './api';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -133,6 +128,23 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/order" component={Order} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/import-menu" component={Import} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/create-importitem"
+                    component={CreateImportItem}
+                  />
+                </Switch>
+                <Switch>
+                  <PrivateRoute
+                    exact
+                    path="/edit-importitem"
+                    component={EditImportItem}
+                  />
                 </Switch>
                 <Switch>
                   <AdminRoute exact path="/group" component={Group} />

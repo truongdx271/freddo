@@ -80,15 +80,15 @@ class Navbar extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/order">
+          <Link className="nav-link" to="/import-menu">
             {' '}
-            Order
+            Import-Menu
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/import">
+          <Link className="nav-link" to="/order">
             {' '}
-            Import
+            Order
           </Link>
         </li>
       </ul>
@@ -109,15 +109,15 @@ class Navbar extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/order">
+          <Link className="nav-link" to="/import-menu">
             {' '}
-            Order
+            Import-Menu
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/import">
+          <Link className="nav-link" to="/order">
             {' '}
-            Import
+            Order
           </Link>
         </li>
       </ul>

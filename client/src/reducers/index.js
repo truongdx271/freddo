@@ -7,6 +7,7 @@ import groupReducer from './groupReducer';
 import tableReducer from './tableReducer';
 import orderReducer from './orderReducer';
 import userReducer from './userReducer';
+import importReducer from './importReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   group: groupReducer,
   table: tableReducer,
   order: orderReducer,
-  user: userReducer
+  user: userReducer,
+  import: importReducer
 });

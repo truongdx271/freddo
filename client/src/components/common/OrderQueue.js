@@ -146,7 +146,7 @@ class OrderQueue extends Component {
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          <p className="text-center">Everything ready for serve?</p>
+          <h2 className="text-center">Everything ready for serve?</h2>
         </Dialog>
       </div>
     );
